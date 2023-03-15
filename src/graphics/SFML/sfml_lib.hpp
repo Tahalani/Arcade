@@ -10,4 +10,14 @@
     #include "../ILib.hpp"
     #include <SFML/Graphics.hpp>
 
+class SFML : public ILib {
+    public:
+        SFML() {};
+        ~SFML() {};
+        void init() {};
+        void stop() {};
+    protected:
+    private:
+};
+
 #endif

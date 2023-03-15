@@ -10,4 +10,14 @@
     #include "../ILib.hpp"
     #include <SDL2/SDL.h>
 
+class SDL : public ILib {
+    public:
+        SDL() {};
+        ~SDL() {};
+        void init() {};
+        void stop() {};
+    protected:
+    private:
+};
+
 #endif

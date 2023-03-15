@@ -10,4 +10,14 @@
     #include "../ILib.hpp"
     #include <ncurses.h>
 
+class Ncurse : public ILib {
+    public:
+        Ncurse() {};
+        ~Ncurse() {};
+        void init() {};
+        void stop() {};
+    protected:
+    private:
+};
+
 #endif

@@ -37,12 +37,8 @@ std::vector<std::string> map = {
 class IGame {
     public:
         virtual ~IGame();
-        virtual void start_game() = 0;
-        virtual void stop_game() = 0;
-        virtual void restart_game() = 0;
-        virtual void get_score() = 0;
-    protected:
-    private:
+        virtual void init() = 0;
+        virtual void stop() = 0;
 };
 
 #endif /* !IGAME_HPP_ */
