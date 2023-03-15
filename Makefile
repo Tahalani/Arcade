@@ -5,17 +5,19 @@
 ## Makefile
 ##
 
-NAME	=	arcade
+NAME		=	arcade
 
-SRC 	=	main.cpp	\
+SRC 		=	main.cpp	\
 
 CXXFLAGS	= -g -Wall -Wextra -I./include/
+
+LDFLAGS 	= -lsfml-graphics -lsfml-window -lsfml-system
 
 OBJ	=	$(SRC:.cpp=.o)
 
 all:	$(NAME)
 $(NAME): $(OBJ)
-	g++ $(CXXFLAGS)	-o $(NAME)	$(OBJ)
+	g++ $(CXXFLAGS)	-o $(NAME)	$(OBJ) $(LDFLAGS)
 
 clean:
 	rm -f *.gcda *.gcno
