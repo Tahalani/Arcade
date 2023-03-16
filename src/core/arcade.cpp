@@ -6,8 +6,6 @@
 */
 
 #include "arcade.hpp"
-#include "../graphics/ILib.hpp"
-#include "../Game/IGame.hpp"
 #include <stdio.h>
 
 Arcade::Arcade(std::string libname)
@@ -16,6 +14,7 @@ Arcade::Arcade(std::string libname)
     std::cout << "Arcade libname: " << _libname << std::endl;
     this->setGameLib(getGameLib());
     this->setGraphicLib(getGraphicLib());
+    std::cout << "Game lib: " << std::endl;
 }
 
 std::string Arcade::getLibName()

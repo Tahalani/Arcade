@@ -13,6 +13,9 @@
 #include <vector>
 #include <filesystem>
 #include <dlfcn.h>
+#include "../src/graphics/ILib.hpp"
+#include "../src/Game/IGame.hpp"
+
 
 class Arcade {
     public:
