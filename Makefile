@@ -16,12 +16,16 @@ LDFLAGS 	= -lsfml-graphics -lsfml-window -lsfml-system
 
 OBJ	=	$(SRC:.cpp=.o)
 
-all:	core graphicals
+all:	core graphicals games
 	
 
 core:	$(NAME)
 $(NAME): $(OBJ)
 	g++ $(CXXFLAGS)	-o $(NAME)	$(OBJ) -ldl
+
+games:
+	make -C src/Game/Snake/
+	mv src/Game/Snake/arcade_snake.so lib/
 
 graphicals:
 	make -C src/graphics/Ncurse/
@@ -36,6 +40,7 @@ clean:
 	make -C src/graphics/Ncurse/ clean
 	make -C src/graphics/SDL/ clean
 	make -C src/graphics/SFML/ clean
+	make -C src/Game/Snake/ clean
 
 fclean:	clean
 	rm -f $(NAME)
@@ -44,6 +49,7 @@ fclean:	clean
 	make -C src/graphics/Ncurse/ fclean
 	make -C src/graphics/SDL/ fclean
 	make -C src/graphics/SFML/ fclean
+	make -C src/Game/Snake/ fclean
 
 re:	fclean all
 
