@@ -13,7 +13,7 @@
 
 class IGame {
     public:
-        virtual ~IGame();
+        virtual ~IGame() = default;
         virtual void init() = 0;
         virtual void stop() = 0;
 };
