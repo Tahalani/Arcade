@@ -17,6 +17,55 @@ Arcade::Arcade(std::string libname)
     std::cout << "Game lib: " << std::endl;
 }
 
+ILib *Arcade::LoadLib(std::string &libname)
+{
+    void *handle;
+    ILib* (*entryLib)();
+    ILib *lib = nullptr;
+
+    handle = dlopen(libname.c_str(), RTLD_LAZY);
+    if (handle) {
+        entryLib = (ILib* (*)())dlsym(handle, "entryLib");
+        if (entryLib)
+            lib = entryLib();
+        else
+            std::cerr << "[LOAD] Error: failed to find entry point [entryLib] in " << libname << "\n";
+        dlclose(handle);
+    } else
+        std::cerr << "[LOAD] Error: failed to load " << libname << std::endl;
+    return lib;
+}
+
+IGame *Arcade::LoadGame(std::string &libname)
+{
+    void *handle;
+    IGame* (*entryGame)();
+    IGame *game = nullptr;
+
+    handle = dlopen(libname.c_str(), RTLD_LAZY);
+    if (handle) {
+        entryGame = (IGame* (*)())dlsym(handle, "entryGame");
+        if (entryGame)
+            game = entryGame();
+        else
+            std::cerr << "[LOAD] Error: failed to find entry point [entryLib] in " << libname << "\n";
+        dlclose(handle);
+    } else
+        std::cerr << "[LOAD] Error: failed to load " << libname << std::endl;
+    return game;
+}
+
+void Arcade::loop()
+{
+    _lib = LoadLib(_libname);
+    std::string game_name = "arcade_snake.so";
+    _game = LoadGame(game_name);
+    if (_lib && _game)
+        std::cout << "Lib and Game loaded" << std::endl;
+    else
+        throw Error("Lib or Game not loaded");
+}
+
 std::string Arcade::getLibName()
 {
     return _libname;

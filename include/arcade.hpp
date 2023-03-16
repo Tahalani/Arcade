@@ -15,6 +15,7 @@
 #include <dlfcn.h>
 #include "../src/graphics/ILib.hpp"
 #include "../src/Game/IGame.hpp"
+#include "Error.hpp"
 
 
 class Arcade {
@@ -26,10 +27,15 @@ class Arcade {
         std::vector<std::string> getGraphicLib();
         void setGameLib(std::vector<std::string> gamelib);
         void setGraphicLib(std::vector<std::string> graphiclib);
+        ILib *LoadLib(std::string &libname);
+        IGame *LoadGame(std::string &libname);
+        void loop();
     private:
         std::string _libname;
         std::vector<std::string> _gamelib;
         std::vector<std::string> _graphiclib;
+        IGame *_game;
+        ILib *_lib;
 };
 
 #endif /* !ARCADE_HPP_ */
