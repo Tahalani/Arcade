@@ -11,6 +11,8 @@ SRC 		=	ncurse.cpp	\
 
 LDFLAGS 	= -lsfml-graphics -lsfml-window -lsfml-system
 
+CXXFLAGS 	= -Wall -Wextra -fPIC
+
 OBJ	=	$(SRC:.cpp=.o)
 
 all:	$(NAME)

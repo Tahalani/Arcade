@@ -12,10 +12,10 @@
 
 class SFML : public ILib {
     public:
-        SFML() {};
-        ~SFML() {};
-        void init() override {};
-        void stop() override {};
+        SFML();
+        ~SFML();
+        void init() override;
+        void stop() override;
     protected:
     private:
 };

@@ -12,10 +12,10 @@
 
 class SDL : public ILib {
     public:
-        SDL() {};
-        ~SDL() {};
-        void init() override {};
-        void stop() override {};
+        SDL();
+        ~SDL();
+        void init() override;
+        void stop() override;
     protected:
     private:
 };

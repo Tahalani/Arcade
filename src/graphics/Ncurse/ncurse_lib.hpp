@@ -12,10 +12,10 @@
 
 class Ncurse : public ILib {
     public:
-        Ncurse() {};
-        ~Ncurse() {};
-        void init() override {};
-        void stop() override {};
+        Ncurse();
+        ~Ncurse();
+        void init() override;
+        void stop() override;
     protected:
     private:
 };
