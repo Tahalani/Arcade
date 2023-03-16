@@ -11,7 +11,6 @@
 Arcade::Arcade(std::string libname)
 {
     _libname = libname;
-    std::cout << "Arcade libname: " << _libname << std::endl;
     this->setGameLib(getGameLib());
     this->setGraphicLib(getGraphicLib());
     std::cout << "Game lib: " << std::endl;
@@ -58,9 +57,10 @@ IGame *Arcade::LoadGame(std::string &libname)
 
 void Arcade::loop()
 {
+    if (_gamelib.empty())
+        throw Error("No game lib found");
     _lib = LoadLib(_libname);
-    std::string game_name = "lib/arcade_snake.so";
-    _game = LoadGame(game_name);
+    _game = LoadGame(_gamelib[0]);
     if (_lib && _game)
         std::cout << "Lib and Game loaded" << std::endl;
     else
@@ -93,7 +93,6 @@ std::vector<std::string> Arcade::getGameLib()
     char *error = nullptr;
 
     for (auto &i : std::filesystem::directory_iterator("./lib/")) {
-        printf("path: %s\n", i.path().c_str());
         handle = dlopen(i.path().c_str(), RTLD_LAZY);
         error = dlerror();
         if (handle) {
@@ -103,10 +102,10 @@ std::vector<std::string> Arcade::getGameLib()
             }
             dlclose(handle);
         } else {
-            // std::cerr << "[GAME] Error: failed to load " << i.path() << std::endl;
             std::cerr << error << std::endl;
        }
     }
+    free(error);
     return _gamelib;
 }
 
@@ -118,6 +117,7 @@ std::vector<std::string> Arcade::getGraphicLib()
 
     for (auto &i : std::filesystem::directory_iterator("./lib/")) {
         handle = dlopen(i.path().c_str(), RTLD_LAZY);
+        error = dlerror();
         if (handle) {
             entryLib = (ILib* (*)())dlsym(handle, "entryLib");
             if (entryLib) {
@@ -127,5 +127,6 @@ std::vector<std::string> Arcade::getGraphicLib()
         } else
             std::cerr << error << std::endl;
     }
+    free(error);
     return _graphiclib;
 }
