@@ -6,6 +6,9 @@
 */
 
 #include "arcade.hpp"
+#include "../graphics/ILib.hpp"
+#include "../Game/IGame.hpp"
+#include <stdio.h>
 
 Arcade::Arcade(std::string libname)
 {
@@ -36,16 +39,42 @@ void Arcade::setGraphicLib(std::vector<std::string> graphiclib)
 
 std::vector<std::string> Arcade::getGameLib()
 {
+    void *handle;
+    IGame* (*entryGame)();
+
     for (auto &i : std::filesystem::directory_iterator("./lib/")) {
-        std::cout << i.path() << std::endl;
+        printf("path: %s\n", i.path().c_str());
+        handle = dlopen(i.path().c_str(), RTLD_LAZY);
+        if (handle) {
+            entryGame = (IGame* (*)())dlsym(handle, "entryGame");
+            if (entryGame) {
+                _gamelib.push_back(i.path());
+            } else
+                std::cerr << "[GAME] Error: failed to find entry point [entryLib] in " << i.path() << "\n";
+            dlclose(handle);
+        } else
+            std::cerr << "[GAME] Error: failed to load " << i.path() << std::endl;
     }
     return _gamelib;
 }
 
 std::vector<std::string> Arcade::getGraphicLib()
 {
+    void *handle;
+    ILib* (*entryLib)();
+
     for (auto &i : std::filesystem::directory_iterator("./lib/")) {
-        std::cout << i.path() << std::endl;
+        handle = dlopen(i.path().c_str(), RTLD_LAZY);
+        if (handle) {
+            entryLib = (ILib* (*)())dlsym(handle, "entryLib");
+            if (entryLib) {
+                _graphiclib.push_back(i.path());
+            } else {
+                std::cerr << "[GRAPHIC] Error: failed to find entry point [entryLib] in " << i.path() << "\n";
+            }
+            dlclose(handle);
+        } else
+            std::cerr << "[GRAPHIC] Error: failed to load " << i.path() << std::endl;
     }
-    return _gamelib;
+    return _graphiclib;
 }

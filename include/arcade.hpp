@@ -12,6 +12,7 @@
 #include <iostream>
 #include <vector>
 #include <filesystem>
+#include <dlfcn.h>
 
 class Arcade {
     public:
