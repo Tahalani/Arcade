@@ -14,8 +14,8 @@ class SFML : public ILib {
     public:
         SFML() {};
         ~SFML() {};
-        void init() {};
-        void stop() {};
+        void init() override {};
+        void stop() override {};
     protected:
     private:
 };

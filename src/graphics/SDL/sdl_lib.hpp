@@ -14,8 +14,8 @@ class SDL : public ILib {
     public:
         SDL() {};
         ~SDL() {};
-        void init() {};
-        void stop() {};
+        void init() override {};
+        void stop() override {};
     protected:
     private:
 };

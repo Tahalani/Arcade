@@ -14,8 +14,8 @@ class Ncurse : public ILib {
     public:
         Ncurse() {};
         ~Ncurse() {};
-        void init() {};
-        void stop() {};
+        void init() override {};
+        void stop() override {};
     protected:
     private:
 };
