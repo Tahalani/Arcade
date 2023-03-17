@@ -27,8 +27,8 @@ class Arcade {
         std::vector<std::string> getGraphicLib();
         void setGameLib(std::vector<std::string> gamelib);
         void setGraphicLib(std::vector<std::string> graphiclib);
-        ILib *LoadLib(std::string &libname);
-        IGame *LoadGame(std::string &libname);
+        void LoadLib(std::string &libname);
+        void LoadGame(std::string &libname);
         void loop();
     private:
         std::string _libname;
@@ -36,6 +36,7 @@ class Arcade {
         std::vector<std::string> _graphiclib;
         IGame *_game;
         ILib *_lib;
+        std::vector<void *> _handles;
 };
 
 #endif /* !ARCADE_HPP_ */

@@ -13,6 +13,8 @@ Arcade::Arcade(std::string libname)
     _libname = libname;
     this->setGameLib(getGameLib());
     this->setGraphicLib(getGraphicLib());
+    _game = nullptr;
+    _lib = nullptr;
     std::cout << "Game lib: " << std::endl;
     for (auto &i : _gamelib)
         std::cout << i << std::endl;
@@ -21,50 +23,54 @@ Arcade::Arcade(std::string libname)
         std::cout << i << std::endl;
 }
 
-ILib *Arcade::LoadLib(std::string &libname)
+void Arcade::LoadLib(std::string &libname)
 {
     void *handle;
     ILib* (*entryLib)();
-    ILib *lib = nullptr;
 
     handle = dlopen(libname.c_str(), RTLD_LAZY);
     if (handle) {
         entryLib = (ILib* (*)())dlsym(handle, "entryLib");
-        if (entryLib)
-            lib = entryLib();
-        dlclose(handle);
+        if (entryLib) {
+            _lib = entryLib();
+            _handles.push_back(handle);
+        }
+        else
+            dlclose(handle);
     } else
         std::cerr << "[LOAD] Error: failed to load " << libname << std::endl;
-    return lib;
 }
 
-IGame *Arcade::LoadGame(std::string &libname)
+void Arcade::LoadGame(std::string &libname)
 {
     void *handle;
     IGame* (*entryGame)();
-    IGame *game = nullptr;
 
     handle = dlopen(libname.c_str(), RTLD_LAZY);
     if (handle) {
         entryGame = (IGame* (*)())dlsym(handle, "entryGame");
-        if (entryGame)
-            game = entryGame();
-        dlclose(handle);
+        if (entryGame) {
+            _game = entryGame();
+            _handles.push_back(handle);
+        }
+        else
+            dlclose(handle);
     } else
         std::cerr << "[LOAD] Error: failed to load " << libname << std::endl;
-    return game;
 }
 
 void Arcade::loop()
 {
     if (_gamelib.empty())
         throw Error("No game lib found");
-    _lib = LoadLib(_libname);
-    _game = LoadGame(_gamelib[0]);
+    LoadLib(_libname);
+    LoadGame(_gamelib[0]);
     if (_lib && _game)
         std::cout << "Lib and Game loaded" << std::endl;
     else
         throw Error("Lib or Game not loaded");
+    delete _lib;
+    delete _game;
 }
 
 std::string Arcade::getLibName()
@@ -74,6 +80,8 @@ std::string Arcade::getLibName()
 
 Arcade::~Arcade()
 {
+    for (auto &i : _handles)
+        dlclose(i);
 }
 
 void Arcade::setGameLib(std::vector<std::string> gamelib)
