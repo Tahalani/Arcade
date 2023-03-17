@@ -29,6 +29,10 @@ class Arcade {
         void setGraphicLib(std::vector<std::string> graphiclib);
         void LoadLib(std::string &libname);
         void LoadGame(std::string &libname);
+        void LoadnextLib();
+        void LoadprevLib();
+        void LoadnextGame();
+        void LoadprevGame();
         void loop();
     private:
         std::string _libname;

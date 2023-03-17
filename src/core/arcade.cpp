@@ -64,7 +64,7 @@ void Arcade::loop()
     if (_gamelib.empty())
         throw Error("No game lib found");
     LoadLib(_libname);
-    LoadGame(_gamelib[0]);
+    LoadGame(_gamelib.front());
     if (_lib && _game)
         std::cout << "Lib and Game loaded" << std::endl;
     else
@@ -137,4 +137,40 @@ std::vector<std::string> Arcade::getGraphicLib()
     }
     free(error);
     return _graphiclib;
+}
+
+void Arcade::LoadnextLib()
+{
+    delete _lib;
+    _graphiclib.emplace_back(_graphiclib.front());
+    _graphiclib.erase(_graphiclib.begin());
+    std ::cout << "newlib: " << _graphiclib.front() << std::endl;
+    LoadLib(_graphiclib.front());
+}
+
+void Arcade::LoadnextGame()
+{
+    delete _game;
+    _gamelib.emplace_back(_gamelib.front());
+    _gamelib.erase(_gamelib.begin());
+    std ::cout << "newgame: " << _gamelib.front() << std::endl;
+    LoadGame(_gamelib.front());
+}
+
+void Arcade::LoadprevLib()
+{
+    delete _lib;
+    _graphiclib.insert(_graphiclib.begin(), _graphiclib.back());
+    _graphiclib.pop_back();
+    std ::cout << "newlib: " << _graphiclib.front() << std::endl;
+    LoadLib(_graphiclib.front());
+}
+
+void Arcade::LoadprevGame()
+{
+    delete _game;
+    _gamelib.insert(_gamelib.begin(), _gamelib.back());
+    _gamelib.pop_back();
+    std ::cout << "newgame: " << _gamelib.front() << std::endl;
+    LoadGame(_gamelib.front());
 }
