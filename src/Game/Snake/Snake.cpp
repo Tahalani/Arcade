@@ -37,7 +37,7 @@ void Snake::runGame(std::size_t key)
 void Snake::in_loop(std::size_t key)
 {
     if (key == LEFT || key == RIGHT || key == UP || key == DOWN) {
-        handleSnake(key, map);
+        handleSnake(key);
     }
 }
 
@@ -53,31 +53,31 @@ void Snake::restart()
     _time = 0;
     map = {
             "XXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-            "XOOOO -                    X",
-            "X                          X",
-            "X    -               -     X",
-            "X                          X",
-            "X         -                X",
+            "XOOOO                      X",
             "X                          X",
             "X                          X",
             "X                          X",
             "X                          X",
             "X                          X",
-            "X           -              X",
-            "X                          X",
-            "X                          X",
-            "X                     -    X",
-            "X                          X",
-            "X                          X",
-            "X    -                     X",
-            "X                          X",
-            "X                          X",
-            "X             -            X",
-            "X                      -   X",
             "X                          X",
             "X                          X",
             "X                          X",
-            "X        -                 X",
+            "X                          X",
+            "X                          X",
+            "X                          X",
+            "X                          X",
+            "X                          X",
+            "X                          X",
+            "X                          X",
+            "X                          X",
+            "X                          X",
+            "X                          X",
+            "X                          X",
+            "X                          X",
+            "X                          X",
+            "X                          X",
+            "X                          X",
+            "X                          X",
             "X                    -     X",
             "X                          X",
             "X                          X",
@@ -91,23 +91,39 @@ void Snake::loose_condition(std::vector<std::string> map, std::size_t y, std::si
         _is_loose = true;
 }
 
-void Snake::eat_apple(std::vector<std::string> map, std::size_t y, std::size_t x)
+
+
+void Snake::eat_apple(std::size_t y, std::size_t x)
 {
     if (map[y][x] == COIN)
         _is_apple = true;
 }
 
-std::vector<std::string> Snake::addSnake_apple(std::vector<std::string>, std::size_t y, std::size_t x)
+void Snake::add_apple()
+{
+    std::size_t y = 0;
+    std::size_t x = 0;
+
+    while (1) {
+        y = rand() % map.size();
+        x = rand() % map[0].length();
+        if (map[y][x] == EMPTY)
+            break;
+    }
+    map[y][x] = COIN;
+}
+
+void Snake::addSnake_apple(std::size_t y, std::size_t x)
 {
     if (_is_apple == true) {
         _coord.insert({_coord.size(), {y, x}});
         map[y][x] = SNAKE;
         _is_apple = false;
+        add_apple();
     }
-    return map;
 }
 
-std::vector<std::string> Snake::moveSnake(std::size_t y, std::size_t x)
+void Snake::moveSnake(std::size_t y, std::size_t x)
 {
     std::pair<std::size_t, std::size_t> oldCase;
     std::pair<std::size_t, std::size_t> newCase;
@@ -118,7 +134,7 @@ std::vector<std::string> Snake::moveSnake(std::size_t y, std::size_t x)
     for (auto it = _coord.begin(); it != _coord.end(); ++it) {
         if (it == _coord.begin()) {
             loose_condition(map, it->second.first + y, it->second.second + x);
-            eat_apple(map, it->second.first + y, it->second.second + x);
+            eat_apple(it->second.first + y, it->second.second + x);
             map[it->second.first + y][it->second.second + x] = SNAKE;
             map[it->second.first][it->second.second] = EMPTY;
             _coord[it->first] = {it->second.first + y, it->second.second + x};
@@ -130,13 +146,12 @@ std::vector<std::string> Snake::moveSnake(std::size_t y, std::size_t x)
             oldCase = {newCase.first, newCase.second};
         }
     }
-    map = addSnake_apple(map, oldCase.first, oldCase.second);
-    return (map);
+    addSnake_apple(oldCase.first, oldCase.second);
 }
 
-std::size_t Snake::handleSnake(std::size_t key, std::vector<std::string> &map)
+std::size_t Snake::handleSnake(std::size_t key)
 {
-    const std::map<std::size_t, std::function<std::vector<std::string>
+    const std::map<std::size_t, std::function<void
     (std::size_t, std::size_t)>> ptr_fct = {
         {LEFT, std::bind(&Snake::moveSnake, this, 0, -1)},
         {RIGHT, std::bind(&Snake::moveSnake, this, 0, 1)},
@@ -144,7 +159,7 @@ std::size_t Snake::handleSnake(std::size_t key, std::vector<std::string> &map)
         {DOWN, std::bind(&Snake::moveSnake, this, 1, 0)}
     };
 
-    map = ptr_fct.at(key)(0, 0);
+    ptr_fct.at(key)(0, 0);
     return (0);
 }
 
