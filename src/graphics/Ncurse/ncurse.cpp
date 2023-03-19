@@ -24,6 +24,7 @@ Ncurse::~Ncurse()
 {
     delwin(_window);
     endwin();
+    std ::cout << "Ncurse destructor" << std::endl;
 }
 
 void Ncurse::displayMap(std::vector<std::string> map)
@@ -51,12 +52,20 @@ int Ncurse::handleEvent()
 {
     int ch = getch();
 
-    if (ch == KEY_BACKSPACE || ch == 'q') {
+    if (ch == 'q') {
         _lastKey = ESCAPE;
         return (_lastKey);
     }
+    if (ch == ' ') {
+        _lastKey = SPACE;
+    }
+    if (ch == KEY_BACKSPACE) {
+        _lastKey = ENTER;
+        std ::cout << "ENTER" << std::endl;
+    }
     if (ch == KEY_LEFT) {
         _lastKey = LEFT;
+        std ::cout << "ENTER" << std::endl;
         return (_lastKey);
     }
     if (ch == KEY_RIGHT) {

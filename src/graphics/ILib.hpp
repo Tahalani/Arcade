@@ -22,6 +22,8 @@ static constexpr int RIGHT = 2;
 static constexpr int UP = 3;
 static constexpr int DOWN = 4;
 static constexpr int ESCAPE = 5;
+static constexpr int SPACE = 6;
+static constexpr int ENTER = 7;
 static constexpr int TIMER_GHOST = 45;
 const inline char *GAME_NAME = "Pacman";
 

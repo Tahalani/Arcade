@@ -83,6 +83,12 @@ int SDL::handleEvent()
             _lastKey = ESCAPE;
             return (_lastKey);
         }
+        if (_event.key.keysym.sym == SDLK_SPACE) {
+            _lastKey = SPACE;
+        }
+        if (_event.key.keysym.sym == SDLK_RETURN) {
+            _lastKey = ENTER;
+        }
         if (_event.key.keysym.sym == SDLK_LEFT) {
             _lastKey = LEFT;
             return (_lastKey);

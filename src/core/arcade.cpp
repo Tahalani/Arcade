@@ -69,6 +69,14 @@ void Arcade::loop()
         std::cout << "Lib and Game loaded" << std::endl;
     else
         throw Error("Lib or Game not loaded");
+    _graphiclib.insert(_graphiclib.begin(), _libname);
+    auto begin = _graphiclib.begin();
+    for (auto it = _graphiclib.end(); it != begin; --it) {
+        if (*it == _libname) {
+            _graphiclib.erase(it);
+            break;
+        }
+    }
     _map = _game->getMap();
     int key = 0;
 
@@ -77,6 +85,10 @@ void Arcade::loop()
         key = _lib->handleEvent();
         _game->runGame(key);
         _map = _game->getMap();
+        if (key == ENTER)
+            LoadnextLib();
+        if (key == SPACE)
+            LoadnextGame();
     }
     delete _lib;
     delete _game;
