@@ -17,7 +17,6 @@
 #include "../src/Game/IGame.hpp"
 #include "Error.hpp"
 
-
 class Arcade {
     public:
         Arcade(std::string libname);
@@ -35,6 +34,7 @@ class Arcade {
         void LoadprevGame();
         void loop();
     private:
+        std::vector<std::string> _map;
         std::string _libname;
         std::vector<std::string> _gamelib;
         std::vector<std::string> _graphiclib;
