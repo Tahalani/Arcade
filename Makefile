@@ -12,8 +12,6 @@ SRC 		=	main.cpp	\
 
 CXXFLAGS	= -g -Wall -Wextra -I./include/
 
-LDFLAGS 	= -lsfml-graphics -lsfml-window -lsfml-system
-
 OBJ	=	$(SRC:.cpp=.o)
 
 all:	core graphicals games
@@ -25,7 +23,9 @@ $(NAME): $(OBJ)
 
 games:
 	make -C src/Game/Snake/
+	make -C src/Game/Pacman/
 	mv src/Game/Snake/arcade_snake.so lib/
+	mv src/Game/Pacman/arcade_pacman.so lib/
 
 graphicals:
 	make -C src/graphics/Ncurse/
@@ -35,12 +35,14 @@ graphicals:
 	mv src/graphics/SDL/arcade_sdl2.so lib/
 	mv src/graphics/SFML/arcade_sfml.so lib/
 
+
 clean:
 	rm -f *.gcda *.gcno
 	make -C src/graphics/Ncurse/ clean
 	make -C src/graphics/SDL/ clean
 	make -C src/graphics/SFML/ clean
 	make -C src/Game/Snake/ clean
+	make -C src/Game/Pacman/ clean
 
 fclean:	clean
 	rm -f $(NAME)
@@ -50,6 +52,7 @@ fclean:	clean
 	make -C src/graphics/SDL/ fclean
 	make -C src/graphics/SFML/ fclean
 	make -C src/Game/Snake/ fclean
+	make -C src/Game/Pacman/ fclean
 
 re:	fclean all
 
