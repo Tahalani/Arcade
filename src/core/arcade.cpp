@@ -87,8 +87,10 @@ void Arcade::loop()
         _map = _game->getMap();
         if (key == ENTER)
             LoadnextLib();
-        if (key == SPACE)
+        if (key == SPACE) {
             LoadnextGame();
+            key = 0;
+        }
     }
     delete _lib;
     delete _game;
