@@ -9,8 +9,6 @@ NAME		=	arcade_snake.so
 
 SRC 		=	Snake.cpp	\
 
-LDFLAGS 	= -lsfml-graphics -lsfml-window -lsfml-system
-
 CXXFLAGS 	= -Wall -Wextra -fPIC
 
 OBJ	=	$(SRC:.cpp=.o)
@@ -18,7 +16,7 @@ OBJ	=	$(SRC:.cpp=.o)
 all:	$(NAME)
 $(NAME): $(OBJ)
 	g++ -o $(NAME) -shared -fPIC $(OBJ)
-	
+
 clean:
 	rm -f *.gcda *.gcno
 
