@@ -9,7 +9,7 @@ NAME		=	arcade_ncurses.so
 
 SRC 		=	ncurse.cpp	\
 
-LDFLAGS 	= -lsfml-graphics -lsfml-window -lsfml-system
+LDFLAGS 	= -lncurses
 
 CXXFLAGS 	= -Wall -Wextra -fPIC
 
@@ -17,8 +17,8 @@ OBJ	=	$(SRC:.cpp=.o)
 
 all:	$(NAME)
 $(NAME): $(OBJ)
-	g++ -o $(NAME) -shared -fPIC $(OBJ)
-	
+	g++ -o $(NAME) -shared -fPIC $(OBJ) $(LDFLAGS)
+
 clean:
 	rm -f *.gcda *.gcno
 

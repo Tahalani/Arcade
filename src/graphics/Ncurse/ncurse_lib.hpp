@@ -10,14 +10,20 @@
     #include "../ILib.hpp"
     #include <ncurses.h>
 
+#define WIDTH 1920
+#define HEIGHT 1080
+
 class Ncurse : public ILib {
     public:
         Ncurse();
         ~Ncurse();
-        void init() override;
-        void stop() override;
-    protected:
+        int handleEvent() override;
+        void drawText(const std::string text, const Vector2i pos, const size_t size) override {(void)text;(void) pos;(void) size;};
+        void drawRect(const Vector2i pos, const Vector2i size, const rgba color) override {(void)pos;(void)size;(void)color;};
+        void displayMap(std::vector<std::string> map) override;
     private:
+        WINDOW *_window;
+        int _lastKey;
 };
 
 #endif

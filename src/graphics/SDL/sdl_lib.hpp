@@ -10,13 +10,24 @@
     #include "../ILib.hpp"
     #include <SDL2/SDL.h>
 
-class SDL : public ILib {
+#define WIDTH 1920
+#define HEIGHT 1080
+
+class SDL : public ILib{
     public:
         SDL();
         ~SDL();
-        void init() override;
-        void stop() override;
+        int handleEvent() override;
+        void drawText(const std::string text, const Vector2i pos, const size_t size) override {(void)text;(void) pos;(void) size;};
+        void drawRect(const Vector2i pos, const Vector2i size, const rgba color) override;
+        void displayMap(std::vector<std::string> map) override;
+        SDL_Window *get_window() {return _window;};
+        SDL_Renderer *get_renderer() {return _renderer;};
     protected:
+        SDL_Window *_window;
+        SDL_Renderer *_renderer;
+        SDL_Surface *_surface;
+        int _lastKey;
     private:
 };
 
