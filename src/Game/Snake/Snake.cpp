@@ -7,24 +7,24 @@
 
 #include "Snake.hpp"
 
-Snake::Snake()
-{
-}
+// Snake::Snake()
+// {
+// }
 
-Snake::~Snake()
-{
-}
+// Snake::~Snake()
+// {
+// }
 
-void Snake::init()
-{
-}
+// void Snake::init()
+// {
+// }
 
-void Snake::stop()
-{
-}
+// void Snake::stop()
+// {
+// }
 
-extern "C" {
-    IGame *entryGame() {
-        return new Snake();
-    }
-}
+// extern "C" {
+//     IGame *entryGame() {
+//         return new Snake();
+//     }
+// }
