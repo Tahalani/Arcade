@@ -58,14 +58,14 @@ int Ncurse::handleEvent()
     }
     if (ch == ' ') {
         _lastKey = SPACE;
+        return (_lastKey);
     }
     if (ch == KEY_BACKSPACE) {
         _lastKey = ENTER;
-        std ::cout << "ENTER" << std::endl;
+        return (_lastKey);
     }
     if (ch == KEY_LEFT) {
         _lastKey = LEFT;
-        std ::cout << "ENTER" << std::endl;
         return (_lastKey);
     }
     if (ch == KEY_RIGHT) {
@@ -80,7 +80,9 @@ int Ncurse::handleEvent()
         _lastKey = DOWN;
         return (_lastKey);
     }
-    return (_lastKey);
+    if ((_lastKey != SPACE && _lastKey != ENTER))
+        return _lastKey;
+    return (0);
 }
 
 extern "C" {
