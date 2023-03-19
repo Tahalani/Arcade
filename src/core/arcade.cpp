@@ -6,7 +6,6 @@
 */
 
 #include "arcade.hpp"
-#include <stdio.h>
 
 Arcade::Arcade(std::string libname)
 {

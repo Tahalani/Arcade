@@ -13,22 +13,25 @@
     #include <map>
     #include <functional>
 
-#define SNAKE 'O'
-#define WALL 'X'
-#define COIN '-'
-#define EMPTY ' '
-#define LEFT 1
-#define RIGHT 2
-#define UP 3
-#define DOWN 4
-#define GAME_NAME "Snake"
+static constexpr char GHOST = 'G';
+static constexpr char SNAKE = 'O';
+static constexpr char WALL = 'X';
+static constexpr char COIN = '-';
+static constexpr char EMPTY = ' ';
+static constexpr int LEFT = 1;
+static constexpr int RIGHT = 2;
+static constexpr int UP = 3;
+static constexpr int DOWN = 4;
+static constexpr int ESCAPE = 5;
+static constexpr int TIMER_GHOST = 45;
+const inline char *GAME_NAME = "Snake";
 
 class Snake : public IGame {
     public:
         Snake();
         ~Snake();
         std::vector<std::string> getMap() const override {return map;};
-        void run_game(std::size_t key);
+        void setStatus(bool status);
         std::size_t handleSnake(std::size_t key);
         void setTime();
         double getTime() const {return _time;};

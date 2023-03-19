@@ -36,6 +36,8 @@ void Snake::runGame(std::size_t key)
 
 void Snake::in_loop(std::size_t key)
 {
+    if (key == ESCAPE)
+        setStatus(false);
     if (key == LEFT || key == RIGHT || key == UP || key == DOWN) {
         handleSnake(key);
     }
@@ -91,7 +93,10 @@ void Snake::loose_condition(std::vector<std::string> map, std::size_t y, std::si
         _is_loose = true;
 }
 
-
+void Snake::setStatus(bool status)
+{
+    _status = status;
+}
 
 void Snake::eat_apple(std::size_t y, std::size_t x)
 {
@@ -103,7 +108,6 @@ void Snake::add_apple()
 {
     std::size_t y = 0;
     std::size_t x = 0;
-
     while (1) {
         y = rand() % map.size();
         x = rand() % map[0].length();

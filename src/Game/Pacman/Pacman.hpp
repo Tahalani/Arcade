@@ -15,7 +15,7 @@
     #include <sstream>
     #include <ctime>
     #include <cstdlib>
-    #include <math.h>
+    #include <cmath>
 
 static constexpr char GHOST = 'G';
 static constexpr char PACMAN = 'O';
