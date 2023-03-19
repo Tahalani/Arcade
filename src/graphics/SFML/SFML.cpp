@@ -113,13 +113,17 @@ int SFML::handleEvent()
             }
             if (event.key.code == sf::Keyboard::Space) {
                 _lastKey = SPACE;
+                return _lastKey;
             }
             if (event.key.code == sf::Keyboard::Enter) {
                 _lastKey = ENTER;
+                return _lastKey;
             }
         }
     }
-    return _lastKey;
+    if ((_lastKey != SPACE && _lastKey != ENTER))
+        return _lastKey;
+    return 0;
 }
 
 extern "C" {
