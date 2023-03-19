@@ -35,8 +35,8 @@ void Arcade::LoadLib(std::string &libname)
             _lib = entryLib();
             _handles.push_back(handle);
         }
-        else
-            dlclose(handle);
+        // else
+            // dlclose(handle);
     } else
         std::cerr << "[LOAD] Error: failed to load " << libname << std::endl;
 }
@@ -53,8 +53,8 @@ void Arcade::LoadGame(std::string &libname)
             _game = entryGame();
             _handles.push_back(handle);
         }
-        else
-            dlclose(handle);
+        // else
+            // dlclose(handle);
     } else
         std::cerr << "[LOAD] Error: failed to load " << libname << std::endl;
 }
@@ -69,6 +69,15 @@ void Arcade::loop()
         std::cout << "Lib and Game loaded" << std::endl;
     else
         throw Error("Lib or Game not loaded");
+    _map = _game->getMap();
+    int key = 0;
+
+    while (_game->getStatus() == true) {
+        _lib->displayMap(_map);
+        key = _lib->handleEvent();
+        _game->runGame(key);
+        _map = _game->getMap();
+    }
     delete _lib;
     delete _game;
 }
@@ -108,7 +117,7 @@ std::vector<std::string> Arcade::getGameLib()
             if (entryGame) {
                 _gamelib.push_back(i.path());
             }
-            dlclose(handle);
+            // dlclose(handle);
         } else {
             std::cerr << error << std::endl;
        }
@@ -131,7 +140,7 @@ std::vector<std::string> Arcade::getGraphicLib()
             if (entryLib) {
                 _graphiclib.push_back(i.path());
             }
-            dlclose(handle);
+            // dlclose(handle);
         } else
             std::cerr << error << std::endl;
     }
