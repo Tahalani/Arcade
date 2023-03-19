@@ -44,7 +44,7 @@ void Pacman::restart()
         "     X-XX          XX-X     ",
         "     X-XX X XXXX X XX-X     ",
         "XXXXXX-XX XGX  XGX XX-XXXXXX",
-        "      -   XXX  XXX   -      ",
+        "A     -   XXX  XXX   -     B",
         "XXXXXX-XX XGX  XGX XX-XXXXXX",
         "     X-XX X XXXX X XX-X     ",
         "     X-XX          XX-X     ",
