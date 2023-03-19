@@ -85,9 +85,11 @@ int SDL::handleEvent()
         }
         if (_event.key.keysym.sym == SDLK_SPACE) {
             _lastKey = SPACE;
+            return (_lastKey);
         }
         if (_event.key.keysym.sym == SDLK_RETURN) {
             _lastKey = ENTER;
+            return (_lastKey);
         }
         if (_event.key.keysym.sym == SDLK_LEFT) {
             _lastKey = LEFT;
@@ -106,7 +108,9 @@ int SDL::handleEvent()
             return (_lastKey);
         }
     }
-    return (_lastKey);
+    if ((_lastKey != SPACE && _lastKey != ENTER))
+        return _lastKey;
+    return (0);
 }
 
 extern "C" {
