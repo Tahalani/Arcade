@@ -16,7 +16,7 @@ OBJ	=	$(SRC:.cpp=.o)
 all:	$(NAME)
 $(NAME): $(OBJ)
 	g++ -o $(NAME) -shared -fPIC $(OBJ)
-	
+
 clean:
 	rm -f *.gcda *.gcno
 
