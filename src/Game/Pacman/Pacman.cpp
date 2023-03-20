@@ -230,28 +230,28 @@ void Pacman::moveGhost(std::vector<std::string> &map)
             for (std::size_t j = 0; j < map[i].size(); j++) {
                 if (map[i][j] == GHOST) {
                     num = rand() % 4;
-                    if (num == 0 && map[i + 1][j] != WALL && map[i + 1][j] != GHOST) {
+                    if (num == 0 && map[i + 1][j] != WALL && map[i + 1][j] != GHOST && map[i + 1][j] != 'B' && map[i + 1][j] != 'A') {
                         if (_map_history[i][j] == 'I' || _map_history[i][j] == EMPTY || _map_history[i][j] == GHOST)
                             map[i][j] = EMPTY;
                         else
                             map[i][j] = COIN;
                         map[i + 1][j] = GHOST;
                     }
-                    if (num == 1 && map[i - 1][j] != WALL && map[i - 1][j] != GHOST) {
+                    if (num == 1 && map[i - 1][j] != WALL && map[i - 1][j] != GHOST && map[i - 1][j] != 'B' && map[i - 1][j] != 'A') {
                         if (_map_history[i][j] == 'I' || _map_history[i][j] == EMPTY || _map_history[i][j] == GHOST)
                             map[i][j] = EMPTY;
                         else
                             map[i][j] = COIN;
                         map[i - 1][j] = GHOST;
                     }
-                    if (num == 2 && map[i][j + 1] != WALL && map[i][j + 1] != GHOST) {
+                    if (num == 2 && map[i][j + 1] != WALL && map[i][j + 1] != GHOST && map[i][j + 1] != 'B' && map[i][j + 1] != 'A') {
                         if (_map_history[i][j] == 'I' || _map_history[i][j] == EMPTY || _map_history[i][j] == GHOST)
                             map[i][j] = EMPTY;
                         else
                             map[i][j] = COIN;
                         map[i][j + 1] = GHOST;
                     }
-                    if (num == 3 && map[i][j - 1] != WALL && map[i][j - 1] != GHOST) {
+                    if (num == 3 && map[i][j - 1] != WALL && map[i][j - 1] != GHOST && map[i][j - 1] != 'B' && map[i][j - 1] != 'A') {
                         if (_map_history[i][j] == 'I' || _map_history[i][j] == EMPTY || _map_history[i][j] == GHOST)
                             map[i][j] = EMPTY;
                         else
