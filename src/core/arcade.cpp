@@ -129,8 +129,8 @@ std::vector<std::string> Arcade::getGameLib()
             entryGame = (IGame* (*)())dlsym(handle, "entryGame");
             if (entryGame) {
                 _gamelib.push_back(i.path());
+                dlclose(handle);
             }
-            // dlclose(handle);
         } else {
             std::cerr << error << std::endl;
        }
@@ -152,8 +152,8 @@ std::vector<std::string> Arcade::getGraphicLib()
             entryLib = (ILib* (*)())dlsym(handle, "entryLib");
             if (entryLib) {
                 _graphiclib.push_back(i.path());
+                dlclose(handle);
             }
-            // dlclose(handle);
         } else
             std::cerr << error << std::endl;
     }

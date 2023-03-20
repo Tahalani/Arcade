@@ -19,7 +19,7 @@ all:	core graphicals games
 
 core:	$(NAME)
 $(NAME): $(OBJ)
-	g++ $(CXXFLAGS)	-o $(NAME)	$(OBJ) -ldl
+	g++ $(CXXFLAGS)	-o $(NAME)	$(OBJ) -ldl -fno-gnu-unique
 
 games:
 	make -C src/Game/Snake/
