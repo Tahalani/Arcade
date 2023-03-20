@@ -27,6 +27,12 @@ Ncurse::~Ncurse()
     std ::cout << "Ncurse destructor" << std::endl;
 }
 
+void Ncurse::drawText(const std::string text, const Vector2i pos, const size_t size)
+{
+    (void)size;
+    mvprintw(pos.y, pos.x, text.c_str());
+}
+
 void Ncurse::displayMap(std::vector<std::string> map)
 {
     for (std::size_t i = 0; i < map.size(); i++) {

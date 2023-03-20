@@ -18,7 +18,7 @@ class Ncurse : public ILib {
         Ncurse();
         ~Ncurse();
         int handleEvent() override;
-        void drawText(const std::string text, const Vector2i pos, const size_t size) override {(void)text;(void) pos;(void) size;};
+        void drawText(const std::string text, const Vector2i pos, const size_t size) override;
         void drawRect(const Vector2i pos, const Vector2i size, const rgba color) override {(void)pos;(void)size;(void)color;};
         void displayMap(std::vector<std::string> map) override;
     private:

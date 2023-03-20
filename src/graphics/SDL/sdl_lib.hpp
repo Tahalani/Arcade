@@ -18,7 +18,7 @@ class SDL : public ILib{
         SDL();
         ~SDL();
         int handleEvent() override;
-        void drawText(const std::string text, const Vector2i pos, const size_t size) override {(void)text;(void) pos;(void) size;};
+        void drawText(const std::string text, const Vector2i pos, const size_t size) override;
         void drawRect(const Vector2i pos, const Vector2i size, const rgba color) override;
         void displayMap(std::vector<std::string> map) override;
         SDL_Window *get_window() {return _window;};

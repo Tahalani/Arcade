@@ -21,6 +21,13 @@ SDL::~SDL()
     SDL_DestroyWindow(_window);
 }
 
+void SDL::drawText(const std::string text, const Vector2i pos, const size_t size)
+{
+    (void)text;
+    (void)pos;
+    (void)size;
+}
+
 void SDL::drawRect(const Vector2i pos, const Vector2i size, const rgba color)
 {
     SDL_Rect rect;
