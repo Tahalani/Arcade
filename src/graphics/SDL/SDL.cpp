@@ -86,33 +86,39 @@ int SDL::handleEvent()
     SDL_Event _event;
 
     while (SDL_PollEvent(&_event)) {
-        if (_event.key.keysym.sym == SDLK_ESCAPE || _event.type == SDL_QUIT) {
+        if (_event.type == SDL_QUIT) {
             _lastKey = ESCAPE;
             return (_lastKey);
         }
-        if (_event.key.keysym.sym == SDLK_SPACE) {
-            _lastKey = SPACE;
-            return (_lastKey);
-        }
-        if (_event.key.keysym.sym == SDLK_RETURN) {
-            _lastKey = ENTER;
-            return (_lastKey);
-        }
-        if (_event.key.keysym.sym == SDLK_LEFT) {
-            _lastKey = LEFT;
-            return (_lastKey);
-        }
-        if (_event.key.keysym.sym == SDLK_RIGHT) {
-            _lastKey = RIGHT;
-            return (_lastKey);
-        }
-        if (_event.key.keysym.sym == SDLK_UP) {
-            _lastKey = UP;
-            return (_lastKey);
-        }
-        if (_event.key.keysym.sym == SDLK_DOWN) {
-            _lastKey = DOWN;
-            return (_lastKey);
+        if (_event.type == SDL_KEYDOWN) {
+            if (_event.key.keysym.sym == SDLK_ESCAPE) {
+                _lastKey = ESCAPE;
+                return (_lastKey);
+            }
+            if (_event.key.keysym.sym == SDLK_SPACE) {
+                _lastKey = SPACE;
+                return (_lastKey);
+            }
+            if (_event.key.keysym.sym == SDLK_RETURN) {
+                _lastKey = ENTER;
+                return (_lastKey);
+            }
+            if (_event.key.keysym.sym == SDLK_LEFT) {
+                _lastKey = LEFT;
+                return (_lastKey);
+            }
+            if (_event.key.keysym.sym == SDLK_RIGHT) {
+                _lastKey = RIGHT;
+                return (_lastKey);
+            }
+            if (_event.key.keysym.sym == SDLK_UP) {
+                _lastKey = UP;
+                return (_lastKey);
+            }
+            if (_event.key.keysym.sym == SDLK_DOWN) {
+                _lastKey = DOWN;
+                return (_lastKey);
+            }
         }
     }
     if ((_lastKey != SPACE && _lastKey != ENTER))
