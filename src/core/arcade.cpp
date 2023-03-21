@@ -62,12 +62,18 @@ void Arcade::menu()
 {
     int key2 = 0;
     while (1) {
+        std::string tmp_lib = _graphiclib.front();
+        std::string tmp_game = _gamelib.front();
+        tmp_lib.erase(0, 13);
+        tmp_lib.erase(tmp_lib.size() - 3, 3);
+        tmp_game.erase(0, 13);
+        tmp_game.erase(tmp_game.size() - 3, 3);
         key2 = _lib->handleEvent();
         _lib->drawText("ARCADE", {1920 / 2 - 200, 100}, 75);
         _lib->drawText("Choose a game : (Press Space to Change)", {1920 / 2 - 200, 300}, 75);
-        _lib->drawText("< " + _gamelib.front() + " >", {1920 / 2 - 200, 400}, 75);
+        _lib->drawText("< " + tmp_game + " >", {1920 / 2 - 200, 400}, 75);
         _lib->drawText("Choose a graphic lib : (Press Enter to Change)", {1920 / 2 - 200, 600}, 75);
-        _lib->drawText("< " + _graphiclib.front() + " >", {1920 / 2 - 200, 700}, 75);
+        _lib->drawText("< " + tmp_lib + " >", {1920 / 2 - 200, 700}, 75);
         _lib->drawText("Press P to valid", {1920 / 2 - 200, 900}, 75);
         _lib->menu();
         if (key2 == ESCAPE) {
