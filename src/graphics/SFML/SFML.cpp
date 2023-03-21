@@ -18,17 +18,13 @@ SFML::~SFML()
     _window.close();
 }
 
-<<<<<<< HEAD
 void SFML::menu()
 {
     _window.display();
     _window.clear(sf::Color::Black);
 }
 
-void SFML::displayMap(std::vector<std::string> map)
-=======
 void SFML::displayMap(std::vector<std::string> map, int score)
->>>>>>> refs/remotes/origin/main
 {
     (void) score;
     int position_x = 0;
