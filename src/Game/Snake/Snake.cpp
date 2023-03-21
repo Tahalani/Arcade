@@ -16,6 +16,7 @@ Snake::Snake()
     _coord.insert({1, std::pair<std::size_t, std::size_t>(1, 3)});
     _coord.insert({2, std::pair<std::size_t, std::size_t>(1, 2)});
     _coord.insert({3, std::pair<std::size_t, std::size_t>(1, 1)});
+    setClock();
 }
 
 Snake::~Snake()
