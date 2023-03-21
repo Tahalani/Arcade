@@ -58,28 +58,8 @@ void Arcade::LoadGame(std::string &libname)
         std::cerr << "[LOAD] Error: failed to load " << libname << std::endl;
 }
 
-void Arcade::loop()
+void Arcade::menu()
 {
-    if (_gamelib.empty())
-        throw Error("No game lib found");
-    LoadLib(_libname);
-    if (_lib)
-        std::cout << "Lib loaded" << std::endl;
-    else
-        throw Error("Lib not loaded");
-    // LoadGame(_gamelib.front());
-    // if (_lib && _game)
-    //     std::cout << "Lib and Game loaded" << std::endl;
-    // else
-    //     throw Error("Lib or Game not loaded");
-    _graphiclib.insert(_graphiclib.begin(), _libname);
-    auto begin = _graphiclib.begin();
-    for (auto it = _graphiclib.end(); it != begin; --it) {
-        if (*it == _libname) {
-            _graphiclib.erase(it);
-            break;
-        }
-    }
     int key2 = 0;
     while (1) {
         key2 = _lib->handleEvent();
@@ -109,13 +89,32 @@ void Arcade::loop()
     delete _lib;
     LoadLib(_graphiclib.front());
     LoadGame(_gamelib.front());
+}
+
+void Arcade::loop()
+{
+    if (_gamelib.empty())
+        throw Error("No game lib found");
+    LoadLib(_libname);
+    if (_lib)
+        std::cout << "Lib loaded" << std::endl;
+    else
+        throw Error("Lib not loaded");
+    _graphiclib.insert(_graphiclib.begin(), _libname);
+    auto begin = _graphiclib.begin();
+    for (auto it = _graphiclib.end(); it != begin; --it) {
+        if (*it == _libname) {
+            _graphiclib.erase(it);
+            break;
+        }
+    }
+    this->menu();
     if (_lib && _game)
         std::cout << "Lib and Game loaded" << std::endl;
     else
         throw Error("Lib or Game not loaded");
     _map = _game->getMap();
     int key = 0;
-
     while (_game->getStatus() == true) {
         _lib->displayMap(_map, 0);
         key = _lib->handleEvent();

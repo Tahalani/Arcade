@@ -33,6 +33,7 @@ class Arcade {
         void LoadnextGame();
         void LoadprevGame();
         void loop();
+        void menu();
     private:
         std::vector<std::string> _map;
         std::string _libname;
