@@ -15,16 +15,18 @@ CXXFLAGS	= -g -Wall -Wextra -I./include/
 OBJ	=	$(SRC:.cpp=.o)
 
 all:	core graphicals games
-	
+
 
 core:	$(NAME)
 $(NAME): $(OBJ)
 	g++ $(CXXFLAGS)	-o $(NAME)	$(OBJ) -ldl -fno-gnu-unique
 
 games:
+	make -C src/Game/Nibbler/
 	make -C src/Game/Snake/
 	make -C src/Game/Pacman/
 	mv src/Game/Snake/arcade_snake.so lib/
+	mv src/Game/Nibbler/arcade_nibbler.so lib/
 	mv src/Game/Pacman/arcade_pacman.so lib/
 
 graphicals:
@@ -41,6 +43,7 @@ clean:
 	make -C src/graphics/SDL/ clean
 	make -C src/graphics/SFML/ clean
 	make -C src/Game/Snake/ clean
+	make -C src/Game/Nibbler/ clean
 	make -C src/Game/Pacman/ clean
 
 fclean:	clean
@@ -51,6 +54,7 @@ fclean:	clean
 	make -C src/graphics/SDL/ fclean
 	make -C src/graphics/SFML/ fclean
 	make -C src/Game/Snake/ fclean
+	make -C src/Game/Nibbler/ fclean
 	make -C src/Game/Pacman/ fclean
 
 re:	fclean all
