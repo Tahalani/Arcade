@@ -80,7 +80,7 @@ void Arcade::loop()
     int key = 0;
 
     while (_game->getStatus() == true) {
-        _lib->displayMap(_map);
+        _lib->displayMap(_map, 0);
         key = _lib->handleEvent();
         _game->runGame(key);
         _map = _game->getMap();

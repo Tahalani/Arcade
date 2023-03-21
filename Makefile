@@ -35,7 +35,6 @@ graphicals:
 	mv src/graphics/SDL/arcade_sdl2.so lib/
 	mv src/graphics/SFML/arcade_sfml.so lib/
 
-
 clean:
 	rm -f *.gcda *.gcno
 	make -C src/graphics/Ncurse/ clean

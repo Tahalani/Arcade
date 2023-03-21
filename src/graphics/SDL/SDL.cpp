@@ -41,8 +41,9 @@ void SDL::drawRect(const Vector2i pos, const Vector2i size, const rgba color)
     SDL_RenderDrawRect(_renderer, &rect);
 }
 
-void SDL::displayMap(std::vector<std::string> map)
+void SDL::displayMap(std::vector<std::string> map, int score)
 {
+    (void) score;
     int position_x = 0;
     int position_y = 0;
     Vector2i pos = {position_x, position_y};

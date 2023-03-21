@@ -18,8 +18,9 @@ SFML::~SFML()
     _window.close();
 }
 
-void SFML::displayMap(std::vector<std::string> map)
+void SFML::displayMap(std::vector<std::string> map, int score)
 {
+    (void) score;
     int position_x = 0;
     int position_y = 0;
     Vector2i pos = {position_x, position_y};
