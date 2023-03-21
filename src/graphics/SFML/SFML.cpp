@@ -18,6 +18,7 @@ SFML::~SFML()
     _window.close();
 }
 
+<<<<<<< HEAD
 void SFML::menu()
 {
     _window.display();
@@ -25,7 +26,11 @@ void SFML::menu()
 }
 
 void SFML::displayMap(std::vector<std::string> map)
+=======
+void SFML::displayMap(std::vector<std::string> map, int score)
+>>>>>>> refs/remotes/origin/main
 {
+    (void) score;
     int position_x = 0;
     int position_y = 0;
     Vector2i pos = {position_x, position_y};

@@ -46,8 +46,12 @@ class ILib {
         virtual int handleEvent() = 0;
         virtual void drawText(const std::string text, const Vector2i pos, const size_t size) = 0;
         virtual void drawRect(const Vector2i pos, const Vector2i size, const rgba color) = 0;
+<<<<<<< HEAD
         virtual void displayMap(const std::vector<std::string> map) = 0;
         virtual void menu() = 0;
+=======
+        virtual void displayMap(const std::vector<std::string> map, int score) = 0;
+>>>>>>> refs/remotes/origin/main
     protected:
     private:
 };

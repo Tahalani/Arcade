@@ -39,8 +39,9 @@ void Ncurse::drawText(const std::string text, const Vector2i pos, const size_t s
     mvprintw(pos.y / 100, pos.x / 100, text.c_str());
 }
 
-void Ncurse::displayMap(std::vector<std::string> map)
+void Ncurse::displayMap(std::vector<std::string> map, int score)
 {
+    (void) score;
     for (std::size_t i = 0; i < map.size(); i++) {
         for (std::size_t j = 0; j < map[i].size(); j++) {
             if (map[i][j] == 'X')
