@@ -23,6 +23,7 @@ class SFML : public ILib{
         void drawText(const std::string text, const Vector2i pos, const size_t size) override;
         void drawRect(const Vector2i pos, const Vector2i size, const rgba color) override;
         void displayMap(std::vector<std::string> map) override;
+        void menu() override;
     private:
         sf::RenderWindow _window;
         int _lastKey;

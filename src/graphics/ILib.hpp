@@ -24,6 +24,7 @@ static constexpr int DOWN = 4;
 static constexpr int ESCAPE = 5;
 static constexpr int SPACE = 6;
 static constexpr int ENTER = 7;
+static constexpr int P = 8;
 static constexpr int TIMER_GHOST = 45;
 const inline char *GAME_NAME = "Pacman";
 
@@ -46,6 +47,7 @@ class ILib {
         virtual void drawText(const std::string text, const Vector2i pos, const size_t size) = 0;
         virtual void drawRect(const Vector2i pos, const Vector2i size, const rgba color) = 0;
         virtual void displayMap(const std::vector<std::string> map) = 0;
+        virtual void menu() = 0;
     protected:
     private:
 };

@@ -21,6 +21,13 @@ SDL::~SDL()
     SDL_DestroyWindow(_window);
 }
 
+void SDL::menu()
+{
+    SDL_UpdateWindowSurface(_window);
+    SDL_RenderPresent(_renderer);
+    SDL_RenderClear(_renderer);
+}
+
 void SDL::drawText(const std::string text, const Vector2i pos, const size_t size)
 {
     (void)text;
@@ -117,6 +124,10 @@ int SDL::handleEvent()
             }
             if (_event.key.keysym.sym == SDLK_DOWN) {
                 _lastKey = DOWN;
+                return (_lastKey);
+            }
+            if (_event.key.keysym.sym == SDLK_p) {
+                _lastKey = P;
                 return (_lastKey);
             }
         }

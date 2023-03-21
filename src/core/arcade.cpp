@@ -63,11 +63,15 @@ void Arcade::loop()
     if (_gamelib.empty())
         throw Error("No game lib found");
     LoadLib(_libname);
-    LoadGame(_gamelib.front());
-    if (_lib && _game)
-        std::cout << "Lib and Game loaded" << std::endl;
+    if (_lib)
+        std::cout << "Lib loaded" << std::endl;
     else
-        throw Error("Lib or Game not loaded");
+        throw Error("Lib not loaded");
+    // LoadGame(_gamelib.front());
+    // if (_lib && _game)
+    //     std::cout << "Lib and Game loaded" << std::endl;
+    // else
+    //     throw Error("Lib or Game not loaded");
     _graphiclib.insert(_graphiclib.begin(), _libname);
     auto begin = _graphiclib.begin();
     for (auto it = _graphiclib.end(); it != begin; --it) {
@@ -76,6 +80,39 @@ void Arcade::loop()
             break;
         }
     }
+    int key2 = 0;
+    while (1) {
+        key2 = _lib->handleEvent();
+        _lib->drawText("ARCADE", {1920 / 2 - 200, 100}, 75);
+        _lib->drawText("Choose a game : (Press Space to Change)", {1920 / 2 - 200, 300}, 75);
+        _lib->drawText("< " + _gamelib.front() + " >", {1920 / 2 - 200, 400}, 75);
+        _lib->drawText("Choose a graphic lib : (Press Enter to Change)", {1920 / 2 - 200, 600}, 75);
+        _lib->drawText("< " + _graphiclib.front() + " >", {1920 / 2 - 200, 700}, 75);
+        _lib->drawText("Press P to valid", {1920 / 2 - 200, 900}, 75);
+        _lib->menu();
+        if (key2 == ESCAPE) {
+            delete _lib;
+            return;
+        }
+        if (key2 == ENTER) {
+            _graphiclib.emplace_back(_graphiclib.front());
+            _graphiclib.erase(_graphiclib.begin());
+        }
+        if (key2 == SPACE) {
+            _gamelib.emplace_back(_gamelib.front());
+            _gamelib.erase(_gamelib.begin());
+        }
+        if (key2 == P) {
+            break;
+        }
+    }
+    delete _lib;
+    LoadLib(_graphiclib.front());
+    LoadGame(_gamelib.front());
+    if (_lib && _game)
+        std::cout << "Lib and Game loaded" << std::endl;
+    else
+        throw Error("Lib or Game not loaded");
     _map = _game->getMap();
     int key = 0;
 

@@ -27,10 +27,16 @@ Ncurse::~Ncurse()
     std ::cout << "Ncurse destructor" << std::endl;
 }
 
+void Ncurse::menu()
+{
+    refresh();
+}
+
 void Ncurse::drawText(const std::string text, const Vector2i pos, const size_t size)
 {
     (void)size;
-    mvprintw(pos.y, pos.x, text.c_str());
+
+    mvprintw(pos.y / 100, pos.x / 100, text.c_str());
 }
 
 void Ncurse::displayMap(std::vector<std::string> map)
@@ -84,6 +90,10 @@ int Ncurse::handleEvent()
     }
     if (ch == KEY_DOWN) {
         _lastKey = DOWN;
+        return (_lastKey);
+    }
+    if (ch == 'p') {
+        _lastKey = P;
         return (_lastKey);
     }
     if ((_lastKey != SPACE && _lastKey != ENTER))

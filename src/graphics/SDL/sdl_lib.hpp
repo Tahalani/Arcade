@@ -23,6 +23,7 @@ class SDL : public ILib{
         void displayMap(std::vector<std::string> map) override;
         SDL_Window *get_window() {return _window;};
         SDL_Renderer *get_renderer() {return _renderer;};
+        void menu() override;
     protected:
         SDL_Window *_window;
         SDL_Renderer *_renderer;

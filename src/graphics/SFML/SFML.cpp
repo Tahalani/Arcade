@@ -18,6 +18,12 @@ SFML::~SFML()
     _window.close();
 }
 
+void SFML::menu()
+{
+    _window.display();
+    _window.clear(sf::Color::Black);
+}
+
 void SFML::displayMap(std::vector<std::string> map)
 {
     int position_x = 0;
@@ -28,7 +34,8 @@ void SFML::displayMap(std::vector<std::string> map)
 
     pos.x = HEIGHT / 2;
     pos.y = 100;
-    drawText("PACMAN", {800, 0}, 100);
+    drawText("Score:", {1400, 200}, 100);
+    drawText(std::to_string(0), {1400, 400}, 100);
     for (std::size_t i = 0; i < map.size(); i++) {
         for (std::size_t j = 0; j < map[i].size(); j++) {
             if (map[i][j] == WALL) {
@@ -117,6 +124,10 @@ int SFML::handleEvent()
             }
             if (event.key.code == sf::Keyboard::Enter) {
                 _lastKey = ENTER;
+                return _lastKey;
+            }
+            if (event.key.code == sf::Keyboard::P) {
+                _lastKey = P;
                 return _lastKey;
             }
         }
