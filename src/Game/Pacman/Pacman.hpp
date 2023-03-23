@@ -72,7 +72,7 @@ class Pacman : public IGame {
         std::size_t _pos_tp_B_x;
         std::size_t _pos_tp_B_y;
         std::vector<std::string> _map_history;
-        std::unordered_map<char, std::array<int, 4>> _rgbmap {
+        std::unordered_map<char, std::array<u_int8_t, 4>> _rgbmap {
             {EMPTY, {0, 0, 0, 255}},
             {WALL, {255, 255, 255, 255}},
             {COIN, {255, 0, 255, 255}},

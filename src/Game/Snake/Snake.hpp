@@ -56,7 +56,7 @@ class Snake : public IGame {
         double _time_ghost;
         bool _status;
         clock_t _start;
-        std::unordered_map<char, std::array<int, 4>> _rgbmap {
+        std::unordered_map<char, std::array<u_int8_t, 4>> _rgbmap {
             {WALL, {255, 255, 255, 255}},
             {SNAKE, {255, 255, 0, 255}},
             {COIN, {255, 0, 255, 255}},
