@@ -68,7 +68,7 @@ void Pacman::restart()
 
 void Pacman::in_loop(std::size_t key, std::vector<std::string> &map)
 {
-    if (key == ESCAPE) {
+    if (key == QUIT) {
         setStatus(false);
     }
     if (key == LEFT || key == RIGHT || key == UP || key == DOWN) {

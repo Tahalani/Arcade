@@ -77,19 +77,19 @@ void Arcade::menu()
         _lib->drawText("< " + tmp_lib + " >", {1920 / 2 - 200, 700}, 75);
         _lib->drawText("Press P to valid", {1920 / 2 - 200, 900}, 75);
         _lib->menu();
-        if (key2 == ESCAPE) {
+        if (key2 == QUIT) {
             delete _lib;
             return;
         }
-        if (key2 == ENTER) {
+        if (key2 == LIB) {
             _graphiclib.emplace_back(_graphiclib.front());
             _graphiclib.erase(_graphiclib.begin());
         }
-        if (key2 == SPACE) {
+        if (key2 == GAME) {
             _gamelib.emplace_back(_gamelib.front());
             _gamelib.erase(_gamelib.begin());
         }
-        if (key2 == P) {
+        if (key2 == VALID) {
             break;
         }
     }
@@ -123,13 +123,13 @@ void Arcade::loop()
     _map = _gameptr->getMap();
     int key = 0;
     while (_gameptr->getStatus() == true) {
-        _lib->displayMap(_map, 0);
+        _lib->displayMap(_map, 0, _gameptr->getRgbValues());
         key = _lib->handleEvent();
         _gameptr->runGame(key);
         _map = _gameptr->getMap();
-        if (key == ENTER)
+        if (key == LIB)
             LoadnextLib();
-        if (key == SPACE) {
+        if (key == GAME) {
             LoadnextGame();
             key = 0;
         }

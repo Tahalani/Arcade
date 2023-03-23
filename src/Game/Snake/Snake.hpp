@@ -20,10 +20,10 @@ static constexpr char SNAKE = 'O';
 static constexpr char WALL = 'X';
 static constexpr char COIN = '-';
 static constexpr char EMPTY = ' ';
-static constexpr int LEFT = 1;
-static constexpr int RIGHT = 2;
-static constexpr int UP = 3;
-static constexpr int DOWN = 4;
+// static constexpr int LEFT = 1;
+// static constexpr int RIGHT = 2;
+// static constexpr int UP = 3;
+// static constexpr int DOWN = 4;
 static constexpr int ESCAPE = 5;
 static constexpr int TIMER_GHOST = 45;
 const inline char *GAME_NAME = "Snake";
@@ -47,6 +47,7 @@ class Snake : public IGame {
         bool getStatus() const override {return _status;};
         void add_apple();
         void runGame(std::size_t key) override;
+        std::unordered_map<char, std::array<u_int8_t, 4>> getRgbValues() const override {return _rgbmap;};
     private:
         std::map<std::size_t, std::pair<std::size_t, std::size_t>>  _coord;
         bool _is_loose;

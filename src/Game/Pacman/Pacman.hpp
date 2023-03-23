@@ -24,10 +24,10 @@ static constexpr char PACMAN = 'O';
 static constexpr char WALL = 'X';
 static constexpr char COIN = '-';
 static constexpr char EMPTY = ' ';
-static constexpr int LEFT = 1;
-static constexpr int RIGHT = 2;
-static constexpr int UP = 3;
-static constexpr int DOWN = 4;
+// static constexpr int LEFT = 1;
+// static constexpr int RIGHT = 2;
+// static constexpr int UP = 3;
+// static constexpr int DOWN = 4;
 static constexpr int ESCAPE = 5;
 static constexpr int TIMER_GHOST = 45;
 const inline char *GAME_NAME = "Pacman";
@@ -56,6 +56,7 @@ class Pacman : public IGame {
         void in_loop(std::size_t key, std::vector<std::string> &map_tmp);
         void setTime();
         void restart() override;
+        std::unordered_map<char, std::array<u_int8_t, 4>> getRgbValues() const override {return _rgbmap;};
     private:
     protected:
         bool _is_loose;

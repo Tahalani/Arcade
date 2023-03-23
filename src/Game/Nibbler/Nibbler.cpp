@@ -37,7 +37,7 @@ void Nibbler::runGame(std::size_t key)
 
 void Nibbler::in_loop(std::size_t key)
 {
-    if (key == ESCAPE)
+    if (key == QUIT)
         setStatus(false);
     if (key == LEFT || key == RIGHT || key == UP || key == DOWN) {
         handleNibbler(key);

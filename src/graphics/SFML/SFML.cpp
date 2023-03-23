@@ -24,9 +24,8 @@ void SFML::menu()
     _window.clear(sf::Color::Black);
 }
 
-void SFML::displayMap(std::vector<std::string> map, int score)
+void SFML::displayMap(std::vector<std::string> map, int score, std::unordered_map<char, std::array<u_int8_t, 4>> rgb)
 {
-    (void) score;
     int position_x = 0;
     int position_y = 0;
     Vector2i pos = {position_x, position_y};
@@ -36,29 +35,11 @@ void SFML::displayMap(std::vector<std::string> map, int score)
     pos.x = HEIGHT / 2;
     pos.y = 100;
     drawText("Score:", {1400, 200}, 100);
-    drawText(std::to_string(0), {1400, 400}, 100);
+    drawText(std::to_string(score), {1400, 400}, 100);
     for (std::size_t i = 0; i < map.size(); i++) {
         for (std::size_t j = 0; j < map[i].size(); j++) {
-            if (map[i][j] == WALL) {
-                color = {255, 255, 255, 255};
-                drawRect(pos, size, color);
-            }
-            if (map[i][j] == EMPTY) {
-                color = {0, 0, 0, 255};
-                drawRect(pos, size, color);
-            }
-            if (map[i][j] == COIN) {
-                color = {255, 0, 255, 255};
-                drawRect(pos, size, color);
-            }
-            if (map[i][j] == PACMAN) {
-                color = {255, 255, 0, 255};
-                drawRect(pos, size, color);
-            }
-            if (map[i][j] == GHOST) {
-                color = {255, 0, 0, 255};
-                drawRect(pos, size, color);
-            }
+            color = {rgb[map[i][j]][0], rgb[map[i][j]][1], rgb[map[i][j]][2], rgb[map[i][j]][3]};
+            drawRect(pos, size, color);
             pos.x += 28;
         }
         pos.x = HEIGHT / 2;
@@ -95,7 +76,7 @@ int SFML::handleEvent()
     sf::Event event;
     while (_window.pollEvent(event)) {
         if (event.type == sf::Event::Closed) {
-            _lastKey = ESCAPE;
+            _lastKey = QUIT;
             return _lastKey;
         }
         if (event.type == sf::Event::KeyPressed) {
@@ -116,24 +97,24 @@ int SFML::handleEvent()
                 return _lastKey;
             }
             if (event.key.code == sf::Keyboard::Escape) {
-                _lastKey = ESCAPE;
+                _lastKey = QUIT;
                 return _lastKey;
             }
             if (event.key.code == sf::Keyboard::Space) {
-                _lastKey = SPACE;
+                _lastKey = GAME;
                 return _lastKey;
             }
             if (event.key.code == sf::Keyboard::Enter) {
-                _lastKey = ENTER;
+                _lastKey = LIB;
                 return _lastKey;
             }
             if (event.key.code == sf::Keyboard::P) {
-                _lastKey = P;
+                _lastKey = VALID;
                 return _lastKey;
             }
         }
     }
-    if ((_lastKey != SPACE && _lastKey != ENTER))
+    if ((_lastKey != GAME && _lastKey != LIB))
         return _lastKey;
     return 0;
 }

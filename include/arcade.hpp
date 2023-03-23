@@ -20,6 +20,17 @@
 
 class Arcade {
     public:
+        enum Key_core {
+        LEFT,
+        RIGHT,
+        UP,
+        DOWN,
+        QUIT, // quitte le jeu
+        PAUSE, // pause
+        LIB, // change de lib
+        GAME, // change de jeux
+        VALID
+    };
         Arcade(std::string libname);
         ~Arcade();
         std::string getLibName();

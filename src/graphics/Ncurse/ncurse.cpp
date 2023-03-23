@@ -39,9 +39,10 @@ void Ncurse::drawText(const std::string text, const Vector2i pos, const size_t s
     mvprintw(pos.y / 100, pos.x / 100, text.c_str());
 }
 
-void Ncurse::displayMap(std::vector<std::string> map, int score)
+void Ncurse::displayMap(std::vector<std::string> map, int score, std::unordered_map<char, std::array<u_int8_t, 4>> rbg)
 {
-    (void) score;
+    (void)rbg;
+    mvprintw(30, 10, "Score: %d", score);
     for (std::size_t i = 0; i < map.size(); i++) {
         for (std::size_t j = 0; j < map[i].size(); j++) {
             if (map[i][j] == 'X')
@@ -66,15 +67,15 @@ int Ncurse::handleEvent()
     int ch = getch();
 
     if (ch == 'q') {
-        _lastKey = ESCAPE;
+        _lastKey = QUIT;
         return (_lastKey);
     }
     if (ch == ' ') {
-        _lastKey = SPACE;
+        _lastKey = GAME;
         return (_lastKey);
     }
     if (ch == KEY_BACKSPACE) {
-        _lastKey = ENTER;
+        _lastKey = LIB;
         return (_lastKey);
     }
     if (ch == KEY_LEFT) {
@@ -94,10 +95,10 @@ int Ncurse::handleEvent()
         return (_lastKey);
     }
     if (ch == 'p') {
-        _lastKey = P;
+        _lastKey = VALID;
         return (_lastKey);
     }
-    if ((_lastKey != SPACE && _lastKey != ENTER))
+    if ((_lastKey != GAME && _lastKey != LIB))
         return _lastKey;
     return (0);
 }
