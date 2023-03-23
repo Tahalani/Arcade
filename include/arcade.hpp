@@ -10,6 +10,7 @@
 
 #include <string>
 #include <iostream>
+#include <memory>
 #include <vector>
 #include <filesystem>
 #include <dlfcn.h>
@@ -39,8 +40,8 @@ class Arcade {
         std::string _libname;
         std::vector<std::string> _gamelib;
         std::vector<std::string> _graphiclib;
-        IGame *_game;
         ILib *_lib;
+        std::shared_ptr<IGame> _gameptr;
         std::vector<void *> _handles;
 };
 

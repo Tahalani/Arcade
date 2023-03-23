@@ -12,8 +12,8 @@ Arcade::Arcade(std::string libname)
     _libname = libname;
     this->setGameLib(getGameLib());
     this->setGraphicLib(getGraphicLib());
-    _game = nullptr;
     _lib = nullptr;
+    _gameptr = nullptr;
     std::cout << "Game lib: " << std::endl;
     for (auto &i : _gamelib)
         std::cout << i << std::endl;
@@ -49,7 +49,8 @@ void Arcade::LoadGame(std::string &libname)
     if (handle) {
         entryGame = (IGame* (*)())dlsym(handle, "entryGame");
         if (entryGame) {
-            _game = entryGame();
+            // _game = entryGame();
+            _gameptr = std::shared_ptr<IGame>(entryGame());
             _handles.push_back(handle);
         }
         // else
@@ -115,17 +116,17 @@ void Arcade::loop()
         }
     }
     this->menu();
-    if (_lib && _game)
+    if (_lib && _gameptr)
         std::cout << "Lib and Game loaded" << std::endl;
     else
         throw Error("Lib or Game not loaded");
-    _map = _game->getMap();
+    _map = _gameptr->getMap();
     int key = 0;
-    while (_game->getStatus() == true) {
+    while (_gameptr->getStatus() == true) {
         _lib->displayMap(_map, 0);
         key = _lib->handleEvent();
-        _game->runGame(key);
-        _map = _game->getMap();
+        _gameptr->runGame(key);
+        _map = _gameptr->getMap();
         if (key == ENTER)
             LoadnextLib();
         if (key == SPACE) {
@@ -134,7 +135,7 @@ void Arcade::loop()
         }
     }
     delete _lib;
-    delete _game;
+    // delete _game;
 }
 
 std::string Arcade::getLibName()
@@ -214,7 +215,7 @@ void Arcade::LoadnextLib()
 
 void Arcade::LoadnextGame()
 {
-    delete _game;
+    // delete _game;
     _gamelib.emplace_back(_gamelib.front());
     _gamelib.erase(_gamelib.begin());
     std ::cout << "newgame: " << _gamelib.front() << std::endl;
@@ -232,7 +233,7 @@ void Arcade::LoadprevLib()
 
 void Arcade::LoadprevGame()
 {
-    delete _game;
+    // delete _game;
     _gamelib.insert(_gamelib.begin(), _gamelib.back());
     _gamelib.pop_back();
     std ::cout << "newgame: " << _gamelib.front() << std::endl;
