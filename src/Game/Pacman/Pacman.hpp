@@ -12,6 +12,8 @@
     #include <fstream>
     #include <chrono>
     #include <thread>
+    #include <unordered_map>
+    #include <array>
     #include <sstream>
     #include <ctime>
     #include <cstdlib>
@@ -70,6 +72,13 @@ class Pacman : public IGame {
         std::size_t _pos_tp_B_x;
         std::size_t _pos_tp_B_y;
         std::vector<std::string> _map_history;
+        std::unordered_map<char, std::array<int, 4>> _rgbmap {
+            {EMPTY, {0, 0, 0, 255}},
+            {WALL, {255, 255, 255, 255}},
+            {COIN, {255, 0, 255, 255}},
+            {PACMAN, {255, 255, 0, 255}},
+            {GHOST, {255, 0, 0, 255}},
+        };
         std::vector<std::string> map = {
             "                            ",
             "XXXXXXXXXXXXXXXXXXXXXXXXXXXX",

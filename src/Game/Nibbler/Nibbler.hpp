@@ -11,6 +11,8 @@
     #include "../IGame.hpp"
     #include <math.h>
     #include <map>
+    #include <unordered_map>
+    #include <array>
     #include <functional>
 
 static constexpr char GHOST = 'G';
@@ -54,6 +56,12 @@ class Nibbler : public IGame {
         double _time_ghost;
         bool _status;
         clock_t _start;
+        std::unordered_map<char, std::array<int, 4>> _rgbmap {
+            {WALL, {255, 255, 255, 255}},
+            {NIBBLER, {255, 255, 0, 255}},
+            {COIN, {255, 0, 255, 255}},
+            {EMPTY, {0, 0, 0, 255}}
+        };
         std::vector<std::string> map = {
             "XXXXXXXXXXXXXXXXXXXXXXXXXXXX",
             "XOOOO                      X",
