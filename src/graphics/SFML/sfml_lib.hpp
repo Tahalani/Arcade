@@ -14,6 +14,7 @@
 
 #define WIDTH 1920
 #define HEIGHT 1080
+#define GAME_NAME "Arcade"
 
 class SFML : public ILib{
     public:

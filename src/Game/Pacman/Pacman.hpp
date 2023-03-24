@@ -23,6 +23,7 @@ static constexpr char GHOST = 'G';
 static constexpr char PACMAN = 'O';
 static constexpr char WALL = 'X';
 static constexpr char COIN = '-';
+static constexpr char BOOST = 'W';
 static constexpr char EMPTY = ' ';
 // static constexpr int LEFT = 1;
 // static constexpr int RIGHT = 2;
@@ -38,12 +39,14 @@ class Pacman : public IGame {
         ~Pacman();
         std::vector<std::string> getMap() const override {return map;};
         std::size_t moveSnake(std::size_t direction, std::vector<std::string> &map);
-        std::size_t getScore() const {return _score;};
+        std::size_t getScore() const override {return _score;};
         std::size_t getGoal() const {return _goal;};
         void setPos_tp(std::vector<std::string> map);
         void setClock() {_start = clock();};
+        void setLevel() {_level += 1;};
         double getTime() const {return _time;};
         bool is_loose() const;
+        void setTimeGoal();
         bool is_win() const;
         void set_time_ghost();
         bool getStatus() const override {return _status;};
@@ -55,6 +58,8 @@ class Pacman : public IGame {
         void setGoal(std::vector<std::string> map);
         void in_loop(std::size_t key, std::vector<std::string> &map_tmp);
         void setTime();
+        void setMapSize(std::vector<std::string> map);
+        void setIsBoost(bool is_boost) {_is_boost = is_boost;};
         void restart() override;
         std::unordered_map<char, std::array<u_int8_t, 4>> getRgbValues() const override {return _rgbmap;};
     private:
@@ -62,8 +67,13 @@ class Pacman : public IGame {
         bool _is_loose;
         double _sink;
         double _time;
+        bool _is_boost;
         double _time_ghost;
         bool _status;
+        float _time_goal;
+        std::size_t _level;
+        std::size_t _map_size_x;
+        std::size_t _map_size_y;
         clock_t _start;
         std::size_t _nbrGhost;
         std::size_t _score;
@@ -79,11 +89,12 @@ class Pacman : public IGame {
             {COIN, {255, 0, 255, 255}},
             {PACMAN, {255, 255, 0, 255}},
             {GHOST, {255, 0, 0, 255}},
+            {BOOST, {0, 255, 255, 255}},
         };
         std::vector<std::string> map = {
             "                            ",
             "XXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-            "X------------XX------------X",
+            "XW-----------XX-----------WX",
             "X-XXXX-XXXXX-XX-XXXXX-XXXX-X",
             "X-XXXX-XXXXX-XX-XXXXX-XXXX-X",
             "X--------------------------X",
@@ -110,7 +121,7 @@ class Pacman : public IGame {
             "X------XX----XX----XX------X",
             "X-XXXXXXXXXX-XX-XXXXXXXXXX-X",
             "X-XXXXXXXXXX-XX-XXXXXXXXXX-X",
-            "X--------------------------X",
+            "XW------------------------WX",
             "XXXXXXXXXXXXXXXXXXXXXXXXXXXX",
         };
 };

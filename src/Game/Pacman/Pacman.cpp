@@ -12,8 +12,13 @@ Pacman::Pacman()
     _is_loose = false;
     _score = 0;
     _status = true;
+    _level = 1;
+    _is_boost = false;
     _time_ghost = 0;
+    _time_goal = 0;
+    _goal = 0;
     _map_history = getMap();
+    setMapSize(getMap());
     setClock();
     setPos_tp(getMap());
     setGoal(getMap());
@@ -28,11 +33,12 @@ void Pacman::restart()
 {
     _time_ghost = 0;
     _is_loose = false;
+    _is_boost = false;
     _score = 0;
     map = {
         "                            ",
         "XXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-        "X------------XX------------X",
+        "XW-----------XX-----------WX",
         "X-XXXX-XXXXX-XX-XXXXX-XXXX-X",
         "X-XXXX-XXXXX-XX-XXXXX-XXXX-X",
         "X--------------------------X",
@@ -59,11 +65,25 @@ void Pacman::restart()
         "X------XX----XX----XX------X",
         "X-XXXXXXXXXX-XX-XXXXXXXXXX-X",
         "X-XXXXXXXXXX-XX-XXXXXXXXXX-X",
-        "X--------------------------X",
+        "XW------------------------WX",
         "XXXXXXXXXXXXXXXXXXXXXXXXXXXX",
     };
     setGoal(map);
     setnumberGhost(map);
+}
+
+void Pacman::setMapSize(std::vector<std::string> _map)
+{
+    _map_size_x = _map.size();
+    _map_size_y = _map[0].size();
+}
+
+void Pacman::setTimeGoal()
+{
+    if (_level == 1)
+        _time_goal = 0.2;
+    else
+        _time_goal = 0.15;
 }
 
 void Pacman::in_loop(std::size_t key, std::vector<std::string> &map)
@@ -83,12 +103,14 @@ void Pacman::runGame(std::size_t key)
 {
     setTime();
     double time = getTime();
-    if (time > 0.2) {
+    setTimeGoal();
+    if (time > _time_goal) {
         in_loop(key, map);
         if (is_loose())
             restart();
         if (is_win()) {
             std::cout << "You win" << std::endl;
+            setLevel();
             restart();
         }
         setClock();
@@ -103,9 +125,15 @@ void Pacman::setStatus(bool status)
 std::size_t Pacman::moveSnake(std::size_t key, std::vector<std::string> &map)
 {
     if (key == LEFT) {
-        for (std::size_t i = 0; i < map.size(); i++) {
-            for (std::size_t j = 0; j < map[i].size(); j++) {
+        for (std::size_t i = 0; i < _map_size_x; i++) {
+            for (std::size_t j = 0; j < _map_size_y; j++) {
                 if (map[i][j] == PACMAN && map[i][j - 1] != WALL) {
+                    if (map[i][j - 1] == GHOST && _is_boost == false)
+                        _is_loose = true;
+                    if (map[i][j - 1] == GHOST && _is_boost == true) {
+                        map[i][j - 1] = EMPTY;
+                        _is_boost = false;
+                    }
                     if (map[i][j - 1] == COIN)
                         _score++;
                     if (map[i][j - 1] == 'A') {
@@ -113,6 +141,8 @@ std::size_t Pacman::moveSnake(std::size_t key, std::vector<std::string> &map)
                         map[i][j] = EMPTY;
                         return (1);
                     }
+                    if (map[i][j - 1] == BOOST)
+                        setIsBoost(true);
                     _map_history[i][j] = 'I';
                     map[i][j - 1] = PACMAN;
                     map[i][j] = EMPTY;
@@ -122,9 +152,15 @@ std::size_t Pacman::moveSnake(std::size_t key, std::vector<std::string> &map)
         }
     }
     if (key == RIGHT) {
-        for (std::size_t i = 0; i < map.size(); i++) {
-            for (std::size_t j = 0; j < map[i].size(); j++) {
+        for (std::size_t i = 0; i < _map_size_x; i++) {
+            for (std::size_t j = 0; j < _map_size_y; j++) {
                 if (map[i][j] == PACMAN && map[i][j + 1] != WALL) {
+                    if (map[i][j + 1] == GHOST && _is_boost == false)
+                        _is_loose = true;
+                    if (map[i][j - 1] == GHOST && _is_boost == true) {
+                        map[i][j + 1] = EMPTY;
+                        _is_boost = false;
+                    }
                     if (map[i][j + 1] == COIN)
                         _score++;
                     if (map[i][j + 1] == 'B') {
@@ -132,6 +168,8 @@ std::size_t Pacman::moveSnake(std::size_t key, std::vector<std::string> &map)
                         map[i][j] = EMPTY;
                         return (1);
                     }
+                    if (map[i][j + 1] == BOOST)
+                        setIsBoost(true);
                     _map_history[i][j] = 'I';
                     map[i][j + 1] = PACMAN;
                     map[i][j] = EMPTY;
@@ -141,11 +179,19 @@ std::size_t Pacman::moveSnake(std::size_t key, std::vector<std::string> &map)
         }
     }
     if (key == UP) {
-        for (std::size_t i = 0; i < map.size(); i++) {
-            for (std::size_t j = 0; j < map[i].size(); j++) {
+        for (std::size_t i = 0; i < _map_size_x; i++) {
+            for (std::size_t j = 0; j < _map_size_y; j++) {
                 if (map[i][j] == PACMAN && map[i - 1][j] != WALL) {
+                    if (map[i - 1][j] == GHOST && _is_boost == false)
+                        _is_loose = true;
+                    if (map[i - 1][j] == GHOST && _is_boost == true) {
+                        map[i - 1][j] = EMPTY;
+                        _is_boost = false;
+                    }
                     if (map[i - 1][j] == COIN)
                         _score++;
+                    if (map[i - 1][j] == BOOST)
+                        setIsBoost(true);
                     _map_history[i][j] = 'I';
                     map[i - 1][j] = PACMAN;
                     map[i][j] = EMPTY;
@@ -155,11 +201,19 @@ std::size_t Pacman::moveSnake(std::size_t key, std::vector<std::string> &map)
         }
     }
     if (key == DOWN) {
-        for (std::size_t i = 0; i < map.size(); i++) {
-            for (std::size_t j = 0; j < map[i].size(); j++) {
+        for (std::size_t i = 0; i < _map_size_x; i++) {
+            for (std::size_t j = 0; j < _map_size_y; j++) {
                 if (map[i][j] == PACMAN && map[i + 1][j] != WALL) {
+                    if (map[i + 1][j] == GHOST && _is_boost == false)
+                        _is_loose = true;
+                    if (map[i + 1][j] == GHOST && _is_boost == true) {
+                        map[i + 1][j] = EMPTY;
+                        _is_boost = false;
+                    }
                     if (map[i + 1][j] == COIN)
                         _score++;
+                    if (map[i + 1][j] == BOOST)
+                        setIsBoost(true);
                     _map_history[i][j] = 'I';
                     map[i + 1][j] = PACMAN;
                     map[i][j] = EMPTY;
@@ -173,8 +227,8 @@ std::size_t Pacman::moveSnake(std::size_t key, std::vector<std::string> &map)
 
 void Pacman::setPos_tp(std::vector<std::string> map)
 {
-    for (std::size_t i = 0; i < map.size(); i++) {
-        for (std::size_t j = 0; j < map[i].size(); j++) {
+    for (std::size_t i = 0; i < _map_size_x; i++) {
+        for (std::size_t j = 0; j < _map_size_y; j++) {
             if (map[i][j] == 'A') {
                 _pos_tp_A_x = i;
                 _pos_tp_A_y = j;
@@ -191,8 +245,8 @@ void Pacman::setGoal(std::vector<std::string> map)
 {
     std::size_t goal = 0;
 
-    for (std::size_t i = 0; i < map.size(); i++) {
-        for (std::size_t j = 0; j < map[i].size(); j++) {
+    for (std::size_t i = 0; i < _map_size_x; i++) {
+        for (std::size_t j = 0; j < _map_size_y; j++) {
             if (map[i][j] == COIN)
                 goal++;
         }
@@ -204,8 +258,8 @@ void Pacman::setnumberGhost(std::vector<std::string> map)
 {
     std::size_t ghosts = 0;
 
-    for (std::size_t i = 0; i < map.size(); i++) {
-        for (std::size_t j = 0; j < map[i].size(); j++) {
+    for (std::size_t i = 0; i < _map_size_x; i++) {
+        for (std::size_t j = 0; j < _map_size_y; j++) {
             if (map[i][j] == GHOST)
                 ghosts++;
         }
@@ -226,13 +280,15 @@ void Pacman::moveGhost(std::vector<std::string> &map)
 
     srand(time(NULL));
     if (_time_ghost > TIMER_GHOST) {
-        for (std::size_t i = 0; i < map.size(); i++) {
-            for (std::size_t j = 0; j < map[i].size(); j++) {
+        for (std::size_t i = 0; i < _map_size_x; i++) {
+            for (std::size_t j = 0; j < _map_size_y; j++) {
                 if (map[i][j] == GHOST) {
                     num = rand() % 4;
                     if (num == 0 && map[i + 1][j] != WALL && map[i + 1][j] != GHOST && map[i + 1][j] != 'B' && map[i + 1][j] != 'A') {
                         if (_map_history[i][j] == 'I' || _map_history[i][j] == EMPTY || _map_history[i][j] == GHOST)
                             map[i][j] = EMPTY;
+                        else if (_map_history[i][j] == BOOST)
+                            map[i][j] = BOOST;
                         else
                             map[i][j] = COIN;
                         map[i + 1][j] = GHOST;
@@ -240,6 +296,8 @@ void Pacman::moveGhost(std::vector<std::string> &map)
                     if (num == 1 && map[i - 1][j] != WALL && map[i - 1][j] != GHOST && map[i - 1][j] != 'B' && map[i - 1][j] != 'A') {
                         if (_map_history[i][j] == 'I' || _map_history[i][j] == EMPTY || _map_history[i][j] == GHOST)
                             map[i][j] = EMPTY;
+                        else if (_map_history[i][j] == BOOST)
+                            map[i][j] = BOOST;
                         else
                             map[i][j] = COIN;
                         map[i - 1][j] = GHOST;
@@ -247,6 +305,8 @@ void Pacman::moveGhost(std::vector<std::string> &map)
                     if (num == 2 && map[i][j + 1] != WALL && map[i][j + 1] != GHOST && map[i][j + 1] != 'B' && map[i][j + 1] != 'A') {
                         if (_map_history[i][j] == 'I' || _map_history[i][j] == EMPTY || _map_history[i][j] == GHOST)
                             map[i][j] = EMPTY;
+                        else if (_map_history[i][j] == BOOST)
+                            map[i][j] = BOOST;
                         else
                             map[i][j] = COIN;
                         map[i][j + 1] = GHOST;
@@ -254,6 +314,8 @@ void Pacman::moveGhost(std::vector<std::string> &map)
                     if (num == 3 && map[i][j - 1] != WALL && map[i][j - 1] != GHOST && map[i][j - 1] != 'B' && map[i][j - 1] != 'A') {
                         if (_map_history[i][j] == 'I' || _map_history[i][j] == EMPTY || _map_history[i][j] == GHOST)
                             map[i][j] = EMPTY;
+                        else if (_map_history[i][j] == BOOST)
+                            map[i][j] = BOOST;
                         else
                             map[i][j] = COIN;
                         map[i][j - 1] = GHOST;
@@ -266,18 +328,15 @@ void Pacman::moveGhost(std::vector<std::string> &map)
 
 void Pacman::loose_condition(std::vector<std::string> map)
 {
-    std::size_t ghosts = 0;
     std::size_t pacman = 0;
-
-    for (std::size_t i = 0; i < map.size(); i++) {
-        for (std::size_t j = 0; j < map[i].size(); j++) {
-            if (map[i][j] == GHOST)
-                ghosts++;
+    
+    for (std::size_t i = 0; i < _map_size_x; i++) {
+        for (std::size_t j = 0; j < _map_size_y; j++) {
             if (map[i][j] == PACMAN)
                 pacman++;
         }
     }
-    if (_nbrGhost != ghosts || pacman != 1)
+    if (pacman != 1)
         _is_loose = true;
 }
 

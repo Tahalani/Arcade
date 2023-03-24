@@ -36,6 +36,7 @@ class Nibbler : public IGame {
         void setStatus(bool status);
         std::size_t handleNibbler(std::size_t key);
         void setTime();
+        std::size_t getScore() const override {return _score;};
         double getTime() const {return _time;};
         void moveNibbler(std::size_t y, std::size_t x);
         void loose_condition(std::vector<std::string> map, std::size_t y, std::size_t x);
@@ -57,6 +58,7 @@ class Nibbler : public IGame {
         double _time_ghost;
         bool _status;
         clock_t _start;
+        std::size_t _score;
         std::unordered_map<char, std::array<u_int8_t, 4>> _rgbmap {
             {WALL, {255, 255, 255, 255}},
             {NIBBLER, {255, 255, 0, 255}},

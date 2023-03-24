@@ -12,6 +12,7 @@ Nibbler::Nibbler()
     _status = true;
     _time = 0;
     _is_apple = false;
+    _score = 0;
     _coord.insert({0, std::pair<std::size_t, std::size_t>(1, 4)});
     _coord.insert({1, std::pair<std::size_t, std::size_t>(1, 3)});
     _coord.insert({2, std::pair<std::size_t, std::size_t>(1, 2)});

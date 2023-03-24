@@ -131,7 +131,7 @@ void Arcade::loop()
     _map = _gameptr->getMap();
     int key = 0;
     while (_gameptr->getStatus() == true) {
-        _lib->displayMap(_map, 0, _gameptr->getRgbValues());
+        _lib->displayMap(_map, _gameptr->getScore(), _gameptr->getRgbValues());
         key = _lib->handleEvent();
         _gameptr->runGame(key);
         _map = _gameptr->getMap();

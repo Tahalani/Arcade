@@ -14,25 +14,41 @@ SDL::SDL()
     _renderer = SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED);
     _surface = SDL_GetWindowSurface(_window);
     SDL_UpdateWindowSurface(_window);
+    SDL_RenderPresent(_renderer);
+    SDL_RenderClear(_renderer);
+    TTF_Init();
 }
 
 SDL::~SDL()
 {
     SDL_DestroyWindow(_window);
+    TTF_Quit();
 }
 
 void SDL::menu()
 {
-    SDL_UpdateWindowSurface(_window);
     SDL_RenderPresent(_renderer);
     SDL_RenderClear(_renderer);
 }
 
 void SDL::drawText(const std::string text, const Vector2i pos, const size_t size)
 {
-    (void)text;
-    (void)pos;
-    (void)size;
+    SDL_Color color = {255, 255, 255, 255};
+    SDL_Surface *surface;
+    SDL_Texture *texture;
+    SDL_Rect rect;
+    TTF_Font *_font = TTF_OpenFont("ressources/font.ttf", size);
+
+    surface = TTF_RenderText_Solid(_font, text.c_str(), color);
+    texture = SDL_CreateTextureFromSurface(_renderer, surface);
+    rect.x = pos.x;
+    rect.y = pos.y;
+    rect.w = text.size() * (size / 2);
+    rect.h = size;
+    SDL_RenderCopy(_renderer, texture, NULL, &rect);
+    SDL_FreeSurface(surface);
+    SDL_DestroyTexture(texture);
+    TTF_CloseFont(_font);
 }
 
 void SDL::drawRect(const Vector2i pos, const Vector2i size, const rgba color)
@@ -58,7 +74,7 @@ void SDL::displayMap(std::vector<std::string> map, int score, std::unordered_map
 
     pos.x = HEIGHT / 2;
     pos.y = 100;
-    drawText("Score:", {1400, 200}, 100);
+    drawText("Score: ", {1400, 300}, 100);
     drawText(std::to_string(score), {1400, 400}, 100);
     for (std::size_t i = 0; i < map.size(); i++) {
         for (std::size_t j = 0; j < map[i].size(); j++) {

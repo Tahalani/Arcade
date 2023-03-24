@@ -13,23 +13,6 @@
     #include <string>
     #include <unordered_map>
 
-static constexpr char GHOST = 'G';
-static constexpr char PACMAN = 'O';
-static constexpr char WALL = 'X';
-static constexpr char COIN = '-';
-static constexpr char EMPTY = ' ';
-// static constexpr int LEFT = 1;
-// static constexpr int RIGHT = 2;
-// static constexpr int UP = 3;
-// static constexpr int DOWN = 4;
-static constexpr int ESCAPE = 5;
-static constexpr int SPACE = 6;
-static constexpr int ENTER = 7;
-static constexpr int P = 8;
-static constexpr int TIMER_GHOST = 45;
-const inline char *GAME_NAME = "Pacman";
-
-
 struct Vector2i {
     int x;
     int y;

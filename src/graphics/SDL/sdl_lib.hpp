@@ -9,9 +9,11 @@
     #define SDL_LIB_HPP
     #include "../ILib.hpp"
     #include <SDL2/SDL.h>
+    #include <SDL2/SDL_ttf.h>
 
 #define WIDTH 1920
 #define HEIGHT 1080
+#define GAME_NAME "Arcade"
 
 class SDL : public ILib{
     public:
@@ -26,6 +28,7 @@ class SDL : public ILib{
         void menu() override;
     protected:
         SDL_Window *_window;
+        TTF_Font *_font;
         SDL_Renderer *_renderer;
         SDL_Surface *_surface;
         int _lastKey;
