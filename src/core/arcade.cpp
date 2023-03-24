@@ -116,8 +116,8 @@ void Arcade::loop()
     else
         throw Error("Lib not loaded");
     _graphiclib.insert(_graphiclib.begin(), _libname);
-    auto begin = _graphiclib.begin();
-    for (auto it = _graphiclib.end(); it != begin; --it) {
+    auto end = _graphiclib.end();
+    for (auto it = _graphiclib.begin(); it != end; ++it) {
         if (*it == _libname) {
             _graphiclib.erase(it);
             break;
