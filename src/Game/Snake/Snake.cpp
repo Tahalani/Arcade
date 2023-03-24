@@ -48,16 +48,15 @@ void Snake::in_loop(std::size_t key)
 void Snake::restart()
 {
     _coord.clear();
-    _coord.insert({0, std::pair<std::size_t, std::size_t>(1, 4)});
-    _coord.insert({1, std::pair<std::size_t, std::size_t>(1, 3)});
-    _coord.insert({2, std::pair<std::size_t, std::size_t>(1, 2)});
-    _coord.insert({3, std::pair<std::size_t, std::size_t>(1, 1)});
+    _coord.insert({0, std::pair<std::size_t, std::size_t>(14, 15)});
+    _coord.insert({1, std::pair<std::size_t, std::size_t>(14, 14)});
+    _coord.insert({2, std::pair<std::size_t, std::size_t>(14, 13)});
+    _coord.insert({3, std::pair<std::size_t, std::size_t>(14, 12)});
     _is_loose = false;
     _status = true;
     _time = 0;
     map = {
             "XXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-            "XOOOO                      X",
             "X                          X",
             "X                          X",
             "X                          X",
@@ -71,6 +70,7 @@ void Snake::restart()
             "X                          X",
             "X                          X",
             "X                          X",
+            "X           OOOO           X",
             "X                          X",
             "X                          X",
             "X                          X",
