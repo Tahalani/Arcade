@@ -102,8 +102,10 @@ void Snake::setStatus(bool status)
 
 void Snake::eat_apple(std::size_t y, std::size_t x)
 {
-    if (map[y][x] == COIN)
+    if (map[y][x] == COIN) {
+        _score += 1;
         _is_apple = true;
+    }
 }
 
 void Snake::add_apple()
