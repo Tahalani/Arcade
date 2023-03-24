@@ -91,8 +91,10 @@ void Nibbler::restart()
 
 void Nibbler::loose_condition(std::vector<std::string> map, std::size_t y, std::size_t x)
 {
-    if (map[y][x] == WALL || map[y][x] == NIBBLER)
+    if (map[y][x] == WALL || map[y][x] == NIBBLER) {
         _is_loose = true;
+        _score = 0;
+    }
 }
 
 void Nibbler::setStatus(bool status)

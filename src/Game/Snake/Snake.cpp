@@ -91,8 +91,10 @@ void Snake::restart()
 
 void Snake::loose_condition(std::vector<std::string> map, std::size_t y, std::size_t x)
 {
-    if (map[y][x] == WALL || map[y][x] == SNAKE)
+    if (map[y][x] == WALL || map[y][x] == SNAKE) {
         _is_loose = true;
+        _score = 0;
+    }
 }
 
 void Snake::setStatus(bool status)
