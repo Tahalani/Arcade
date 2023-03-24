@@ -114,6 +114,81 @@ int SDL::handleEvent()
                 _lastKey = VALID;
                 return (_lastKey);
             }
+            if (_event.key.keysym.sym == SDLK_a) {
+                return 'A';
+            }
+            if (_event.key.keysym.sym == SDLK_b) {
+                return 'B';
+            }
+            if (_event.key.keysym.sym == SDLK_c) {
+                return 'C';
+            }
+            if (_event.key.keysym.sym == SDLK_d) {
+                return 'D';
+            }
+            if (_event.key.keysym.sym == SDLK_e) {
+                return 'E';
+            }
+            if (_event.key.keysym.sym == SDLK_f) {
+                return 'F';
+            }
+            if (_event.key.keysym.sym == SDLK_g) {
+                return 'G';
+            }
+            if (_event.key.keysym.sym == SDLK_h) {
+                return 'H';
+            }
+            if (_event.key.keysym.sym == SDLK_i) {
+                return 'I';
+            }
+            if (_event.key.keysym.sym == SDLK_j) {
+                return 'J';
+            }
+            if (_event.key.keysym.sym == SDLK_k) {
+                return 'K';
+            }
+            if (_event.key.keysym.sym == SDLK_l) {
+                return 'L';
+            }
+            if (_event.key.keysym.sym == SDLK_m) {
+                return 'M';
+            }
+            if (_event.key.keysym.sym == SDLK_n) {
+                return 'N';
+            }
+            if (_event.key.keysym.sym == SDLK_o) {
+                return 'O';
+            }
+            if (_event.key.keysym.sym == SDLK_q) {
+                return 'Q';
+            }
+            if (_event.key.keysym.sym == SDLK_r) {
+                return 'R';
+            }
+            if (_event.key.keysym.sym == SDLK_s) {
+                return 'S';
+            }
+            if (_event.key.keysym.sym == SDLK_t) {
+                return 'T';
+            }
+            if (_event.key.keysym.sym == SDLK_u) {
+                return 'U';
+            }
+            if (_event.key.keysym.sym == SDLK_v) {
+                return 'V';
+            }
+            if (_event.key.keysym.sym == SDLK_w) {
+                return 'W';
+            }
+            if (_event.key.keysym.sym == SDLK_x) {
+                return 'X';
+            }
+            if (_event.key.keysym.sym == SDLK_y) {
+                return 'Y';
+            }
+            if (_event.key.keysym.sym == SDLK_z) {
+                return 'Z';
+            }
         }
     }
     if ((_lastKey != GAME && _lastKey != LIB))

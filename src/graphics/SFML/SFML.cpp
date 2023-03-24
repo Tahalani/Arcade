@@ -112,6 +112,81 @@ int SFML::handleEvent()
                 _lastKey = VALID;
                 return _lastKey;
             }
+            if (event.key.code == sf::Keyboard::A) {
+                return 'A';
+            }
+            if (event.key.code == sf::Keyboard::B) {
+                return 'B';
+            }
+            if (event.key.code == sf::Keyboard::C) {
+                return 'C';
+            }
+            if (event.key.code == sf::Keyboard::D) {
+                return 'D';
+            }
+            if (event.key.code == sf::Keyboard::E) {
+                return 'E';
+            }
+            if (event.key.code == sf::Keyboard::F) {
+                return 'F';
+            }
+            if (event.key.code == sf::Keyboard::G) {
+                return 'G';
+            }
+            if (event.key.code == sf::Keyboard::H) {
+                return 'H';
+            }
+            if (event.key.code == sf::Keyboard::I) {
+                return 'I';
+            }
+            if (event.key.code == sf::Keyboard::J) {
+                return 'J';
+            }
+            if (event.key.code == sf::Keyboard::K) {
+                return 'K';
+            }
+            if (event.key.code == sf::Keyboard::L) {
+                return 'L';
+            }
+            if (event.key.code == sf::Keyboard::M) {
+                return 'M';
+            }
+            if (event.key.code == sf::Keyboard::N) {
+                return 'N';
+            }
+            if (event.key.code == sf::Keyboard::O) {
+                return 'O';
+            }
+            if (event.key.code == sf::Keyboard::Q) {
+                return 'Q';
+            }
+            if (event.key.code == sf::Keyboard::R) {
+                return 'R';
+            }
+            if (event.key.code == sf::Keyboard::S) {
+                return 'S';
+            }
+            if (event.key.code == sf::Keyboard::T) {
+                return 'T';
+            }
+            if (event.key.code == sf::Keyboard::U) {
+                return 'U';
+            }
+            if (event.key.code == sf::Keyboard::V) {
+                return 'V';
+            }
+            if (event.key.code == sf::Keyboard::W) {
+                return 'W';
+            }
+            if (event.key.code == sf::Keyboard::X) {
+                return 'X';
+            }
+            if (event.key.code == sf::Keyboard::Y) {
+                return 'Y';
+            }
+            if (event.key.code == sf::Keyboard::Z) {
+                return 'Z';
+            }
         }
     }
     if ((_lastKey != GAME && _lastKey != LIB))

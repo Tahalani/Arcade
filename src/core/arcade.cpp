@@ -22,6 +22,12 @@ Arcade::Arcade(std::string libname)
         std::cout << i << std::endl;
 }
 
+void Arcade::addplayername(char c)
+{
+    if (c >= 'A' && c <= 'Z')
+        _playername += c;
+}
+
 void Arcade::LoadLib(std::string &libname)
 {
     void *handle;
@@ -70,12 +76,13 @@ void Arcade::menu()
         tmp_game.erase(0, 13);
         tmp_game.erase(tmp_game.size() - 3, 3);
         key2 = _lib->handleEvent();
-        _lib->drawText("ARCADE", {1920 / 2 - 200, 100}, 75);
-        _lib->drawText("Choose a game : (Press Space to Change)", {1920 / 2 - 200, 300}, 75);
-        _lib->drawText("< " + tmp_game + " >", {1920 / 2 - 200, 400}, 75);
-        _lib->drawText("Choose a graphic lib : (Press Enter to Change)", {1920 / 2 - 200, 600}, 75);
-        _lib->drawText("< " + tmp_lib + " >", {1920 / 2 - 200, 700}, 75);
-        _lib->drawText("Press P to valid", {1920 / 2 - 200, 900}, 75);
+        _lib->drawText("ARCADE", {1920 / 2 - 200, 100}, 60);
+        _lib->drawText("Enter a name : " + _playername, {1920 / 2 - 20, 200}, 60);
+        _lib->drawText("Choose a game : (Press Space to Change)", {0, 300}, 60);
+        _lib->drawText("< " + tmp_game + " >", {0, 350}, 60);
+        _lib->drawText("Choose a graphic lib : (Press Enter to Change)", {0, 600}, 60);
+        _lib->drawText("< " + tmp_lib + " >", {0, 650}, 60);
+        _lib->drawText("Press P to valid", {0, 900}, 60);
         _lib->menu();
         if (key2 == QUIT) {
             delete _lib;
@@ -92,6 +99,7 @@ void Arcade::menu()
         if (key2 == VALID) {
             break;
         }
+        addplayername(key2);
     }
     delete _lib;
     LoadLib(_graphiclib.front());

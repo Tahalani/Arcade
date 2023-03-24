@@ -35,8 +35,7 @@ void Ncurse::menu()
 void Ncurse::drawText(const std::string text, const Vector2i pos, const size_t size)
 {
     (void)size;
-
-    mvprintw(pos.y / 100, pos.x / 100, text.c_str());
+    mvprintw(pos.y / 50, pos.x / 50, text.c_str());
 }
 
 void Ncurse::displayMap(std::vector<std::string> map, int score, std::unordered_map<char, std::array<u_int8_t, 4>> rbg)
@@ -97,6 +96,78 @@ int Ncurse::handleEvent()
     if (ch == 'p') {
         _lastKey = VALID;
         return (_lastKey);
+    }
+    if (ch == 'a') {
+        return 'A';
+    }
+    if (ch == 'b') {
+        return 'B';
+    }
+    if (ch == 'c') {
+        return 'C';
+    }
+    if (ch == 'd') {
+        return 'D';
+    }
+    if (ch == 'e') {
+        return 'E';
+    }
+    if (ch == 'f') {
+        return 'F';
+    }
+    if (ch == 'g') {
+        return 'G';
+    }
+    if (ch == 'h') {
+        return 'H';
+    }
+    if (ch == 'i') {
+        return 'I';
+    }
+    if (ch == 'j') {
+        return 'J';
+    }
+    if (ch == 'k') {
+        return 'K';
+    }
+    if (ch == 'l') {
+        return 'L';
+    }
+    if (ch == 'm') {
+        return 'M';
+    }
+    if (ch == 'n') {
+        return 'N';
+    }
+    if (ch == 'o') {
+        return 'O';
+    }
+    if (ch == 'r') {
+        return 'R';
+    }
+    if (ch == 's') {
+        return 'S';
+    }
+    if (ch == 't') {
+        return 'T';
+    }
+    if (ch == 'u') {
+        return 'U';
+    }
+    if (ch == 'v') {
+        return 'V';
+    }
+    if (ch == 'w') {
+        return 'W';
+    }
+    if (ch == 'x') {
+        return 'X';
+    }
+    if (ch == 'y') {
+        return 'Y';
+    }
+    if (ch == 'z') {
+        return 'Z';
     }
     if ((_lastKey != GAME && _lastKey != LIB))
         return _lastKey;

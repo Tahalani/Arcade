@@ -36,6 +36,7 @@ class Arcade {
         std::string getLibName();
         std::vector<std::string> getGameLib();
         std::vector<std::string> getGraphicLib();
+        void addplayername(char c);
         void setGameLib(std::vector<std::string> gamelib);
         void setGraphicLib(std::vector<std::string> graphiclib);
         void LoadLib(std::string &libname);
@@ -54,6 +55,7 @@ class Arcade {
         ILib *_lib;
         std::shared_ptr<IGame> _gameptr;
         std::vector<void *> _handles;
+        std::string _playername;
 };
 
 #endif /* !ARCADE_HPP_ */
