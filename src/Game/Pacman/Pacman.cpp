@@ -17,6 +17,7 @@ Pacman::Pacman()
     _time_ghost = 0;
     _time_goal = 0;
     _goal = 0;
+    _key = 0;
     _map_history = getMap();
     setMapSize(getMap());
     setClock();
@@ -104,8 +105,10 @@ void Pacman::runGame(std::size_t key)
     setTime();
     double time = getTime();
     setTimeGoal();
+    if (key == QUIT || key == LEFT || key == RIGHT || key == UP || key == DOWN)
+        _key = key;
     if (time > _time_goal) {
-        in_loop(key, map);
+        in_loop(_key, map);
         if (is_loose())
             restart();
         if (is_win()) {

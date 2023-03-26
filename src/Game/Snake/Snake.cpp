@@ -13,6 +13,7 @@ Snake::Snake()
     _time = 0;
     _score = 0;
     _is_apple = false;
+    _key = 0;
     _coord.insert({0, std::pair<std::size_t, std::size_t>(1, 4)});
     _coord.insert({1, std::pair<std::size_t, std::size_t>(1, 3)});
     _coord.insert({2, std::pair<std::size_t, std::size_t>(1, 2)});
@@ -28,8 +29,10 @@ void Snake::runGame(std::size_t key)
 {
     setTime();
     double time = getTime();
+    if (key == QUIT || key == LEFT || key == RIGHT || key == UP || key == DOWN)
+        _key = key;
     if (time > 0.2) {
-        in_loop(key);
+        in_loop(_key);
         if (_is_loose == true)
             restart();
         setClock();

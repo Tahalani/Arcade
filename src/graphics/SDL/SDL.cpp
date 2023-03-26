@@ -9,7 +9,7 @@
 
 SDL::SDL()
 {
-    _lastKey = 0;
+    _lastKey = 404;
     _window = SDL_CreateWindow (GAME_NAME, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, SDL_WINDOW_SHOWN);
     _renderer = SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED);
     _surface = SDL_GetWindowSurface(_window);

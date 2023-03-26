@@ -12,8 +12,8 @@ Arcade::Arcade(std::string libname)
     _libname = libname;
     this->setGameLib(getGameLib());
     this->setGraphicLib(getGraphicLib());
-    _lib = nullptr;
-    _gameptr = nullptr;
+    // _lib = nullptr;
+    // _gameptr = nullptr;
     std::cout << "Game lib: " << std::endl;
     for (auto &i : _gamelib)
         std::cout << i << std::endl;
@@ -28,23 +28,23 @@ void Arcade::addplayername(char c)
         _playername += c;
 }
 
-void Arcade::LoadLib(std::string &libname)
-{
-    void *handle;
-    ILib* (*entryLib)();
+// void Arcade::LoadLib(std::string &libname)
+// {
+//     void *handle;
+//     ILib* (*entryLib)();
 
-    handle = dlopen(libname.c_str(), RTLD_LAZY);
-    if (handle) {
-        entryLib = (ILib* (*)())dlsym(handle, "entryLib");
-        if (entryLib) {
-            _lib = entryLib();
-            _handles.push_back(handle);
-        }
-        // else
-            // dlclose(handle);
-    } else
-        std::cerr << "[LOAD] Error: failed to load " << libname << std::endl;
-}
+//     handle = dlopen(libname.c_str(), RTLD_LAZY);
+//     if (handle) {
+//         entryLib = (ILib* (*)())dlsym(handle, "entryLib");
+//         if (entryLib) {
+//             _lib = entryLib();
+//             _handles.push_back(handle);
+//         }
+//         // else
+//             // dlclose(handle);
+//     } else
+//         std::cerr << "[LOAD] Error: failed to load " << libname << std::endl;
+// }
 
 void Arcade::LoadGame(std::string &libname)
 {
@@ -75,17 +75,17 @@ void Arcade::menu()
         tmp_lib.erase(tmp_lib.size() - 3, 3);
         tmp_game.erase(0, 13);
         tmp_game.erase(tmp_game.size() - 3, 3);
-        key2 = _lib->handleEvent();
-        _lib->drawText("ARCADE", {1920 / 2 - 200, 100}, 60);
-        _lib->drawText("Enter a name : " + _playername, {1920 / 2 - 20, 200}, 60);
-        _lib->drawText("Choose a game : (Press Space to Change)", {0, 300}, 60);
-        _lib->drawText("< " + tmp_game + " >", {0, 350}, 60);
-        _lib->drawText("Choose a graphic lib : (Press Enter to Change)", {0, 600}, 60);
-        _lib->drawText("< " + tmp_lib + " >", {0, 650}, 60);
-        _lib->drawText("Press P to valid", {0, 900}, 60);
-        _lib->menu();
+        key2 = _lib.getLib()->handleEvent();
+        _lib.getLib()->drawText("ARCADE", {1920 / 2 - 200, 100}, 60);
+        _lib.getLib()->drawText("Enter a name : " + _playername, {1920 / 2 - 20, 200}, 60);
+        _lib.getLib()->drawText("Choose a game : (Press Space to Change)", {0, 300}, 60);
+        _lib.getLib()->drawText("< " + tmp_game + " >", {0, 350}, 60);
+        _lib.getLib()->drawText("Choose a graphic lib : (Press Enter to Change)", {0, 600}, 60);
+        _lib.getLib()->drawText("< " + tmp_lib + " >", {0, 650}, 60);
+        _lib.getLib()->drawText("Press P to valid", {0, 900}, 60);
+        _lib.getLib()->menu();
         if (key2 == QUIT) {
-            delete _lib;
+            // delete _lib;
             return;
         }
         if (key2 == LIB) {
@@ -101,8 +101,8 @@ void Arcade::menu()
         }
         addplayername(key2);
     }
-    delete _lib;
-    LoadLib(_graphiclib.front());
+    // delete _lib;
+    _lib.LoadLib(_graphiclib.front());
     LoadGame(_gamelib.front());
 }
 
@@ -110,11 +110,17 @@ void Arcade::loop()
 {
     if (_gamelib.empty())
         throw Error("No game lib found");
-    LoadLib(_libname);
-    if (_lib)
-        std::cout << "Lib loaded" << std::endl;
-    else
+    try {
+        _lib.LoadLib(_libname);
+    } catch (Loader<ILib>::ErrorParser &e) {
+        std::cerr << e.what() << std::endl;
         throw Error("Lib not loaded");
+    }
+    // LoadLib(_libname);
+    // if (_lib)
+    //     std::cout << "Lib loaded" << std::endl;
+    // else
+    //     throw Error("Lib not loaded");
     _graphiclib.insert(_graphiclib.begin(), _libname);
     auto end = _graphiclib.end();
     for (auto it = _graphiclib.begin(); it != end; ++it) {
@@ -124,15 +130,15 @@ void Arcade::loop()
         }
     }
     this->menu();
-    if (_lib && _gameptr)
-        std::cout << "Lib and Game loaded" << std::endl;
-    else
-        throw Error("Lib or Game not loaded");
+    // if (_gameptr)
+    //     std::cout << "Lib and Game loaded" << std::endl;
+    // else
+    //     throw Error("Lib or Game not loaded");
     _map = _gameptr->getMap();
     int key = 0;
     while (_gameptr->getStatus() == true) {
-        _lib->displayMap(_map, _gameptr->getScore(), _gameptr->getRgbValues());
-        key = _lib->handleEvent();
+        _lib.getLib()->displayMap(_map, _gameptr->getScore(), _gameptr->getRgbValues());
+        key = _lib.getLib()->handleEvent();
         _gameptr->runGame(key);
         _map = _gameptr->getMap();
         if (key == LIB)
@@ -142,7 +148,7 @@ void Arcade::loop()
             key = 0;
         }
     }
-    delete _lib;
+    // delete _lib;
     // delete _game;
 }
 
@@ -214,11 +220,11 @@ std::vector<std::string> Arcade::getGraphicLib()
 
 void Arcade::LoadnextLib()
 {
-    delete _lib;
+    // delete _lib;
     _graphiclib.emplace_back(_graphiclib.front());
     _graphiclib.erase(_graphiclib.begin());
     std ::cout << "newlib: " << _graphiclib.front() << std::endl;
-    LoadLib(_graphiclib.front());
+    _lib.LoadLib(_graphiclib.front());
 }
 
 void Arcade::LoadnextGame()
@@ -232,11 +238,11 @@ void Arcade::LoadnextGame()
 
 void Arcade::LoadprevLib()
 {
-    delete _lib;
+    // delete _lib;
     _graphiclib.insert(_graphiclib.begin(), _graphiclib.back());
     _graphiclib.pop_back();
     std ::cout << "newlib: " << _graphiclib.front() << std::endl;
-    LoadLib(_graphiclib.front());
+    _lib.LoadLib(_graphiclib.front());
 }
 
 void Arcade::LoadprevGame()

@@ -17,6 +17,7 @@
 #include "../src/graphics/ILib.hpp"
 #include "../src/Game/IGame.hpp"
 #include "Error.hpp"
+#include "loader.hpp"
 
 class Arcade {
     public:
@@ -39,7 +40,7 @@ class Arcade {
         void addplayername(char c);
         void setGameLib(std::vector<std::string> gamelib);
         void setGraphicLib(std::vector<std::string> graphiclib);
-        void LoadLib(std::string &libname);
+        // void LoadLib(std::string &libname);
         void LoadGame(std::string &libname);
         void LoadnextLib();
         void LoadprevLib();
@@ -52,7 +53,8 @@ class Arcade {
         std::string _libname;
         std::vector<std::string> _gamelib;
         std::vector<std::string> _graphiclib;
-        ILib *_lib;
+        // ILib *_lib;
+        Loader<ILib> _lib;
         std::shared_ptr<IGame> _gameptr;
         std::vector<void *> _handles;
         std::string _playername;

@@ -11,7 +11,7 @@ SRC 		=	SDL.cpp	\
 
 LDFLAGS 	= -lSDL2 -lSDL2_ttf
 
-CXXFLAGS 	= -Wall -Wextra -fPIC
+CXXFLAGS 	= -Wall -Wextra -fPIC -g
 
 OBJ	=	$(SRC:.cpp=.o)
 

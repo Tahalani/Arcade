@@ -10,7 +10,7 @@
 SFML::SFML()
 {
     _window.create(sf::VideoMode(WIDTH, HEIGHT, 32), GAME_NAME, sf::Style::Default);
-    _lastKey = 0;
+    _lastKey = 404;
 }
 
 SFML::~SFML()

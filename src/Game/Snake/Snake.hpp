@@ -50,6 +50,7 @@ class Snake : public IGame {
         void runGame(std::size_t key) override;
         std::unordered_map<char, std::array<u_int8_t, 4>> getRgbValues() const override {return _rgbmap;};
     private:
+        std::size_t _key;
         std::map<std::size_t, std::pair<std::size_t, std::size_t>>  _coord;
         bool _is_loose;
         bool _is_apple;

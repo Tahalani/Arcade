@@ -12,7 +12,7 @@ Ncurse::Ncurse()
     _window = initscr();
     keypad(stdscr, TRUE);
     start_color();
-    _lastKey = 0;
+    _lastKey = 404;
     nodelay(_window, TRUE);
     noecho();
     init_pair(1, COLOR_CYAN, COLOR_BLACK);

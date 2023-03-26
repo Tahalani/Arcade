@@ -64,6 +64,7 @@ class Pacman : public IGame {
         std::unordered_map<char, std::array<u_int8_t, 4>> getRgbValues() const override {return _rgbmap;};
     private:
     protected:
+        std::size_t _key;
         bool _is_loose;
         double _sink;
         double _time;
