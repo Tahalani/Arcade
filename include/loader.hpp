@@ -32,14 +32,15 @@ class Loader {
             for (auto &handle : _handles)
                 dlclose(handle);
         }
-        void LoadLib(std::string &libname) {
+        void LoadLib(std::string &libname, std::string const &point) {
             if (_lib)
                 delete _lib;
             T* (*entryLib)();
+            std::string entry = "entry" + point;
 
             void *handle = dlopen(libname.c_str(), RTLD_LAZY);
             if (handle) {
-                entryLib = (T* (*)())dlsym(handle, "entryLib");
+                entryLib = (T* (*)())dlsym(handle, entry.c_str());
                 if (entryLib) {
                     _lib = entryLib();
                     _handles.push_back(handle);

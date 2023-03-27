@@ -7,9 +7,8 @@
 
 #include "arcade.hpp"
 
-Arcade::Arcade(std::string libname)
+Arcade::Arcade(std::string libname) : _libname(libname)
 {
-    _libname = libname;
     this->setGameLib(getGameLib());
     this->setGraphicLib(getGraphicLib());
     // _lib = nullptr;
@@ -46,24 +45,24 @@ void Arcade::addplayername(char c)
 //         std::cerr << "[LOAD] Error: failed to load " << libname << std::endl;
 // }
 
-void Arcade::LoadGame(std::string &libname)
-{
-    void *handle;
-    IGame* (*entryGame)();
+// void Arcade::LoadGame(std::string &libname)
+// {
+//     void *handle;
+//     IGame* (*entryGame)();
 
-    handle = dlopen(libname.c_str(), RTLD_LAZY);
-    if (handle) {
-        entryGame = (IGame* (*)())dlsym(handle, "entryGame");
-        if (entryGame) {
-            // _game = entryGame();
-            _gameptr = std::shared_ptr<IGame>(entryGame());
-            _handles.push_back(handle);
-        }
-        // else
-            // dlclose(handle);
-    } else
-        std::cerr << "[LOAD] Error: failed to load " << libname << std::endl;
-}
+//     handle = dlopen(libname.c_str(), RTLD_LAZY);
+//     if (handle) {
+//         entryGame = (IGame* (*)())dlsym(handle, "entryGame");
+//         if (entryGame) {
+//             // _game = entryGame();
+//             _gameptr = std::shared_ptr<IGame>(entryGame());
+//             _handles.push_back(handle);
+//         }
+//         // else
+//             // dlclose(handle);
+//     } else
+//         std::cerr << "[LOAD] Error: failed to load " << libname << std::endl;
+// }
 
 void Arcade::menu()
 {
@@ -85,6 +84,7 @@ void Arcade::menu()
         _lib.getLib()->drawText("Press P to valid", {0, 900}, 60);
         _lib.getLib()->menu();
         if (key2 == QUIT) {
+            std::cout << "Quit" << std::endl;
             // delete _lib;
             return;
         }
@@ -102,8 +102,14 @@ void Arcade::menu()
         addplayername(key2);
     }
     // delete _lib;
-    _lib.LoadLib(_graphiclib.front());
-    LoadGame(_gamelib.front());
+    try {
+        _lib.LoadLib(_graphiclib.front(), "Lib");
+        _game.LoadLib(_gamelib.front(), "Game");
+    } catch (Loader<ILib>::ErrorParser &e) {
+        throw Error("Lib not loaded");
+    } catch (Loader<IGame>::ErrorParser &e) {
+        throw Error("Game not loaded");
+    }
 }
 
 void Arcade::loop()
@@ -111,9 +117,9 @@ void Arcade::loop()
     if (_gamelib.empty())
         throw Error("No game lib found");
     try {
-        _lib.LoadLib(_libname);
+        _lib.LoadLib(_libname, "Lib");
     } catch (Loader<ILib>::ErrorParser &e) {
-        std::cerr << e.what() << std::endl;
+        // std::cerr << e.what() << std::endl;
         throw Error("Lib not loaded");
     }
     // LoadLib(_libname);
@@ -130,17 +136,20 @@ void Arcade::loop()
         }
     }
     this->menu();
+    if (_game.getLib() == nullptr) {
+        return;
+    }
     // if (_gameptr)
     //     std::cout << "Lib and Game loaded" << std::endl;
     // else
     //     throw Error("Lib or Game not loaded");
-    _map = _gameptr->getMap();
+    _map = _game.getLib()->getMap();
     int key = 0;
-    while (_gameptr->getStatus() == true) {
-        _lib.getLib()->displayMap(_map, _gameptr->getScore(), _gameptr->getRgbValues());
+    while (_game.getLib()->getStatus() == true) {
+        _lib.getLib()->displayMap(_map, _game.getLib()->getScore(), _game.getLib()->getRgbValues());
         key = _lib.getLib()->handleEvent();
-        _gameptr->runGame(key);
-        _map = _gameptr->getMap();
+        _game.getLib()->runGame(key);
+        _map = _game.getLib()->getMap();
         if (key == LIB)
             LoadnextLib();
         if (key == GAME) {
@@ -224,7 +233,7 @@ void Arcade::LoadnextLib()
     _graphiclib.emplace_back(_graphiclib.front());
     _graphiclib.erase(_graphiclib.begin());
     std ::cout << "newlib: " << _graphiclib.front() << std::endl;
-    _lib.LoadLib(_graphiclib.front());
+    _lib.LoadLib(_graphiclib.front(), "Lib");
 }
 
 void Arcade::LoadnextGame()
@@ -233,7 +242,7 @@ void Arcade::LoadnextGame()
     _gamelib.emplace_back(_gamelib.front());
     _gamelib.erase(_gamelib.begin());
     std ::cout << "newgame: " << _gamelib.front() << std::endl;
-    LoadGame(_gamelib.front());
+    _game.LoadLib(_gamelib.front(), "Game");
 }
 
 void Arcade::LoadprevLib()
@@ -242,7 +251,7 @@ void Arcade::LoadprevLib()
     _graphiclib.insert(_graphiclib.begin(), _graphiclib.back());
     _graphiclib.pop_back();
     std ::cout << "newlib: " << _graphiclib.front() << std::endl;
-    _lib.LoadLib(_graphiclib.front());
+    _lib.LoadLib(_graphiclib.front(), "Lib");
 }
 
 void Arcade::LoadprevGame()
@@ -251,5 +260,5 @@ void Arcade::LoadprevGame()
     _gamelib.insert(_gamelib.begin(), _gamelib.back());
     _gamelib.pop_back();
     std ::cout << "newgame: " << _gamelib.front() << std::endl;
-    LoadGame(_gamelib.front());
+    _game.LoadLib(_gamelib.front(), "Game");
 }

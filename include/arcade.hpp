@@ -41,7 +41,7 @@ class Arcade {
         void setGameLib(std::vector<std::string> gamelib);
         void setGraphicLib(std::vector<std::string> graphiclib);
         // void LoadLib(std::string &libname);
-        void LoadGame(std::string &libname);
+        // void LoadGame(std::string &libname);
         void LoadnextLib();
         void LoadprevLib();
         void LoadnextGame();
@@ -55,7 +55,8 @@ class Arcade {
         std::vector<std::string> _graphiclib;
         // ILib *_lib;
         Loader<ILib> _lib;
-        std::shared_ptr<IGame> _gameptr;
+        Loader<IGame> _game;
+        // std::shared_ptr<IGame> _gameptr;
         std::vector<void *> _handles;
         std::string _playername;
 };
