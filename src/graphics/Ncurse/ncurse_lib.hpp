@@ -24,7 +24,7 @@ class Ncurse : public ILib {
         void displayMap(std::vector<std::string> map, int score, std::unordered_map<char, std::array<u_int8_t, 4>> rbg) override;
         void menu() override;
     private:
-        WINDOW *_window;
+        SCREEN *_screen;
         int _lastKey;
 };
 

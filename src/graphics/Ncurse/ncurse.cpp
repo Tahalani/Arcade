@@ -9,11 +9,11 @@
 
 Ncurse::Ncurse()
 {
-    _window = initscr();
+    _screen = newterm(NULL, stdout, stdin);
     keypad(stdscr, TRUE);
     start_color();
     _lastKey = 404;
-    nodelay(_window, TRUE);
+    nodelay(stdscr, TRUE);
     noecho();
     init_pair(1, COLOR_CYAN, COLOR_BLACK);
     init_pair(2, COLOR_YELLOW, COLOR_BLACK);
@@ -22,7 +22,7 @@ Ncurse::Ncurse()
 
 Ncurse::~Ncurse()
 {
-    delwin(_window);
+    delscreen(_screen);
     endwin();
     std ::cout << "Ncurse destructor" << std::endl;
 }
