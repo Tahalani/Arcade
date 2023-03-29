@@ -68,7 +68,6 @@ class Snake : public IGame {
         };
         std::vector<std::string> map = {
             "XXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-            "XOOOO                      X",
             "X                          X",
             "X                          X",
             "X                          X",
@@ -82,6 +81,7 @@ class Snake : public IGame {
             "X                          X",
             "X                          X",
             "X                          X",
+            "X           OOOO           X",
             "X                          X",
             "X                          X",
             "X                          X",
