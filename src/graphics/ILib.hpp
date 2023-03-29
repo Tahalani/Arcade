@@ -8,6 +8,7 @@
 #ifndef ILIB_HPP_
     #define ILIB_HPP_
 
+    #include <array>
     #include <iostream>
     #include <vector>
     #include <string>
