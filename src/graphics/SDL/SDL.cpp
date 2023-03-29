@@ -23,6 +23,7 @@ SDL::~SDL()
 {
     SDL_DestroyWindow(_window);
     TTF_Quit();
+    SDL_Quit();
 }
 
 void SDL::menu()
