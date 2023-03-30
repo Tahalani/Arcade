@@ -24,6 +24,7 @@ class SFML : public ILib{
         void drawText(const std::string text, const Vector2i pos, const size_t size) override;
         void drawRect(const Vector2i pos, const Vector2i size, const rgba color) override;
         void displayMap(std::vector<std::string> map, int score, std::unordered_map<char, std::array<u_int8_t, 4>> rbg) override;
+        bool drawSprite(const std::string path, const Vector2i pos);
         void menu() override;
     private:
         sf::RenderWindow _window;

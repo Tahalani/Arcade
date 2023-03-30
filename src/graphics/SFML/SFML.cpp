@@ -31,15 +31,21 @@ void SFML::displayMap(std::vector<std::string> map, int score, std::unordered_ma
     Vector2i pos = {position_x, position_y};
     Vector2i size = {28, 28};
     rgba color = {255, 0, 0, 255};
-
     pos.x = HEIGHT / 2;
     pos.y = 100;
     drawText("Score:", {1400, 200}, 100);
     drawText(std::to_string(score), {1400, 400}, 100);
     for (std::size_t i = 0; i < map.size(); i++) {
         for (std::size_t j = 0; j < map[i].size(); j++) {
-            color = {rgb[map[i][j]][0], rgb[map[i][j]][1], rgb[map[i][j]][2], rgb[map[i][j]][3]};
-            drawRect(pos, size, color);
+            if (map[i][j] == 'O') {
+                if (drawSprite("ressources/mehdi.jpg", pos) == false) {
+                    color = {rgb[map[i][j]][0], rgb[map[i][j]][1], rgb[map[i][j]][2], rgb[map[i][j]][3]};
+                    drawRect(pos, size, color);
+                }
+            } else {
+                color = {rgb[map[i][j]][0], rgb[map[i][j]][1], rgb[map[i][j]][2], rgb[map[i][j]][3]};
+                drawRect(pos, size, color);
+            }
             pos.x += 28;
         }
         pos.x = HEIGHT / 2;
@@ -47,6 +53,19 @@ void SFML::displayMap(std::vector<std::string> map, int score, std::unordered_ma
     }
     _window.display();
     _window.clear(sf::Color::Black);
+}
+
+bool SFML::drawSprite(const std::string path, const Vector2i pos)
+{
+    sf::Texture texture;
+    sf::Sprite sprite;
+
+    if (!texture.loadFromFile(path))
+        return false;
+    sprite.setTexture(texture);
+    sprite.setPosition(pos.x, pos.y);
+    _window.draw(sprite);
+    return true;
 }
 
 void SFML::drawText(const std::string text, const Vector2i pos, const size_t size)
