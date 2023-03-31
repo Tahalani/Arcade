@@ -131,6 +131,10 @@ int SDL::handleEvent()
                 _lastKey = VALID;
                 return (_lastKey);
             }
+            if (_event.key.keysym.sym == SDLK_TAB) {
+                _lastKey = RESET;
+                return (_lastKey);
+            }
             if (_event.key.keysym.sym == SDLK_a) {
                 return 'A';
             }
@@ -208,7 +212,7 @@ int SDL::handleEvent()
             }
         }
     }
-    if ((_lastKey != GAME && _lastKey != LIB))
+    if ((_lastKey != GAME && _lastKey != LIB && _lastKey != RESET))
         return _lastKey;
     return (0);
 }

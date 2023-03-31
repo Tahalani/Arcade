@@ -156,6 +156,9 @@ void Arcade::loop()
             LoadnextGame();
             key = 0;
         }
+        if (key == RESET) {
+            _game.getLib()->restart();
+        }
     }
     // delete _lib;
     // delete _game;
@@ -233,7 +236,11 @@ void Arcade::LoadnextLib()
     _graphiclib.emplace_back(_graphiclib.front());
     _graphiclib.erase(_graphiclib.begin());
     std ::cout << "newlib: " << _graphiclib.front() << std::endl;
-    _lib.LoadLib(_graphiclib.front(), "Lib");
+    try {
+        _lib.LoadLib(_graphiclib.front(), "Lib");
+    } catch (Loader<ILib>::ErrorParser &e) {
+        throw Error("Cannot Load next Lib");
+    }
 }
 
 void Arcade::LoadnextGame()
@@ -242,7 +249,11 @@ void Arcade::LoadnextGame()
     _gamelib.emplace_back(_gamelib.front());
     _gamelib.erase(_gamelib.begin());
     std ::cout << "newgame: " << _gamelib.front() << std::endl;
-    _game.LoadLib(_gamelib.front(), "Game");
+    try {
+        _game.LoadLib(_gamelib.front(), "Game");
+    } catch (Loader<IGame>::ErrorParser &e) {
+        throw Error("Cannot Load next Game");
+    }
 }
 
 void Arcade::LoadprevLib()
@@ -251,7 +262,11 @@ void Arcade::LoadprevLib()
     _graphiclib.insert(_graphiclib.begin(), _graphiclib.back());
     _graphiclib.pop_back();
     std ::cout << "newlib: " << _graphiclib.front() << std::endl;
+    try {
     _lib.LoadLib(_graphiclib.front(), "Lib");
+    } catch (Loader<ILib>::ErrorParser &e) {
+        throw Error("Cannot Load prev Lib");
+    }
 }
 
 void Arcade::LoadprevGame()
@@ -260,5 +275,9 @@ void Arcade::LoadprevGame()
     _gamelib.insert(_gamelib.begin(), _gamelib.back());
     _gamelib.pop_back();
     std ::cout << "newgame: " << _gamelib.front() << std::endl;
-    _game.LoadLib(_gamelib.front(), "Game");
+    try {
+        _game.LoadLib(_gamelib.front(), "Game");
+    } catch (Loader<IGame>::ErrorParser &e) {
+        throw Error("Cannot Load prev Game");
+    }
 }

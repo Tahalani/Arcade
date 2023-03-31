@@ -37,7 +37,8 @@ struct rgba {
         PAUSE, // pause
         LIB, // change de lib
         GAME, // change de jeux
-        VALID
+        VALID,
+        RESET
     };
 #endif /* !KEY_HPP_ */
 

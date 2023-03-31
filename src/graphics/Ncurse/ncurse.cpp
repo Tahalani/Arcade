@@ -73,7 +73,7 @@ int Ncurse::handleEvent()
         _lastKey = GAME;
         return (_lastKey);
     }
-    if (ch == KEY_BACKSPACE) {
+    if (ch == '\n') {
         _lastKey = LIB;
         return (_lastKey);
     }
@@ -95,6 +95,10 @@ int Ncurse::handleEvent()
     }
     if (ch == 'p') {
         _lastKey = VALID;
+        return (_lastKey);
+    }
+    if (ch == '\t') {
+        _lastKey = RESET;
         return (_lastKey);
     }
     if (ch == 'a') {
@@ -169,7 +173,7 @@ int Ncurse::handleEvent()
     if (ch == 'z') {
         return 'Z';
     }
-    if ((_lastKey != GAME && _lastKey != LIB))
+    if ((_lastKey != GAME && _lastKey != LIB && _lastKey != RESET))
         return _lastKey;
     return (0);
 }

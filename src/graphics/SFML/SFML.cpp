@@ -127,6 +127,10 @@ int SFML::handleEvent()
                 _lastKey = LIB;
                 return _lastKey;
             }
+            if (event.key.code == sf::Keyboard::Tab) {
+                _lastKey = RESET;
+                return _lastKey;
+            }
             if (event.key.code == sf::Keyboard::P) {
                 _lastKey = VALID;
                 return _lastKey;
@@ -208,7 +212,7 @@ int SFML::handleEvent()
             }
         }
     }
-    if ((_lastKey != GAME && _lastKey != LIB))
+    if ((_lastKey != GAME && _lastKey != LIB && _lastKey != RESET))
         return _lastKey;
     return 0;
 }
