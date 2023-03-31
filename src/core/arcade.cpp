@@ -6,13 +6,12 @@
 */
 
 #include "arcade.hpp"
+#include <algorithm>
 
 Arcade::Arcade(std::string libname) : _libname(libname)
 {
-    this->setGameLib(getGameLib());
-    this->setGraphicLib(getGraphicLib());
-    // _lib = nullptr;
-    // _gameptr = nullptr;
+    this->getGameLib();
+    this->getGraphicLib();
     std::cout << "Game lib: " << std::endl;
     for (auto &i : _gamelib)
         std::cout << i << std::endl;
@@ -27,47 +26,12 @@ void Arcade::addplayername(char c)
         _playername += c;
 }
 
-// void Arcade::LoadLib(std::string &libname)
-// {
-//     void *handle;
-//     ILib* (*entryLib)();
-
-//     handle = dlopen(libname.c_str(), RTLD_LAZY);
-//     if (handle) {
-//         entryLib = (ILib* (*)())dlsym(handle, "entryLib");
-//         if (entryLib) {
-//             _lib = entryLib();
-//             _handles.push_back(handle);
-//         }
-//         // else
-//             // dlclose(handle);
-//     } else
-//         std::cerr << "[LOAD] Error: failed to load " << libname << std::endl;
-// }
-
-// void Arcade::LoadGame(std::string &libname)
-// {
-//     void *handle;
-//     IGame* (*entryGame)();
-
-//     handle = dlopen(libname.c_str(), RTLD_LAZY);
-//     if (handle) {
-//         entryGame = (IGame* (*)())dlsym(handle, "entryGame");
-//         if (entryGame) {
-//             // _game = entryGame();
-//             _gameptr = std::shared_ptr<IGame>(entryGame());
-//             _handles.push_back(handle);
-//         }
-//         // else
-//             // dlclose(handle);
-//     } else
-//         std::cerr << "[LOAD] Error: failed to load " << libname << std::endl;
-// }
-
 void Arcade::menu()
 {
     int key2 = 0;
     while (1) {
+        this->getGameLib();
+        this->getGraphicLib();
         std::string tmp_lib = _graphiclib.front();
         std::string tmp_game = _gamelib.front();
         tmp_lib.erase(0, 13);
@@ -119,14 +83,8 @@ void Arcade::loop()
     try {
         _lib.LoadLib(_libname, "Lib");
     } catch (Loader<ILib>::ErrorParser &e) {
-        // std::cerr << e.what() << std::endl;
         throw Error("Lib not loaded");
     }
-    // LoadLib(_libname);
-    // if (_lib)
-    //     std::cout << "Lib loaded" << std::endl;
-    // else
-    //     throw Error("Lib not loaded");
     _graphiclib.insert(_graphiclib.begin(), _libname);
     auto end = _graphiclib.end();
     for (auto it = _graphiclib.begin(); it != end; ++it) {
@@ -139,13 +97,11 @@ void Arcade::loop()
     if (_game.getLib() == nullptr) {
         return;
     }
-    // if (_gameptr)
-    //     std::cout << "Lib and Game loaded" << std::endl;
-    // else
-    //     throw Error("Lib or Game not loaded");
     _map = _game.getLib()->getMap();
     int key = 0;
     while (_game.getLib()->getStatus() == true) {
+        this->getGameLib();
+        this->getGraphicLib();
         _lib.getLib()->displayMap(_map, _game.getLib()->getScore(), _game.getLib()->getRgbValues());
         key = _lib.getLib()->handleEvent();
         _game.getLib()->runGame(key);
@@ -185,7 +141,7 @@ void Arcade::setGraphicLib(std::vector<std::string> graphiclib)
     _graphiclib = graphiclib;
 }
 
-std::vector<std::string> Arcade::getGameLib()
+void Arcade::getGameLib()
 {
     void *handle;
     IGame* (*entryGame)();
@@ -197,18 +153,17 @@ std::vector<std::string> Arcade::getGameLib()
         if (handle) {
             entryGame = (IGame* (*)())dlsym(handle, "entryGame");
             if (entryGame) {
-                _gamelib.push_back(i.path());
+                if ((std::find(_gamelib.begin(), _gamelib.end(), i.path()) == _gamelib.end()))
+                    _gamelib.push_back(i.path());
                 dlclose(handle);
             }
-        } else {
-            std::cerr << error << std::endl;
-       }
+        }
     }
-    free(error);
-    return _gamelib;
+    if (error != nullptr)
+        free(error);
 }
 
-std::vector<std::string> Arcade::getGraphicLib()
+void Arcade::getGraphicLib()
 {
     void *handle;
     ILib* (*entryLib)();
@@ -220,14 +175,15 @@ std::vector<std::string> Arcade::getGraphicLib()
         if (handle) {
             entryLib = (ILib* (*)())dlsym(handle, "entryLib");
             if (entryLib) {
-                _graphiclib.push_back(i.path());
+                if ((std::find(_graphiclib.begin(), _graphiclib.end(), i.path()) == _graphiclib.end())) {
+                    _graphiclib.push_back(i.path());
+                }
                 dlclose(handle);
             }
-        } else
-            std::cerr << error << std::endl;
+        }
     }
-    free(error);
-    return _graphiclib;
+    if (error != nullptr)
+        free(error);
 }
 
 void Arcade::LoadnextLib()

@@ -35,8 +35,8 @@ class Arcade {
         Arcade(std::string libname);
         ~Arcade();
         std::string getLibName();
-        std::vector<std::string> getGameLib();
-        std::vector<std::string> getGraphicLib();
+        void getGameLib();
+        void getGraphicLib();
         void addplayername(char c);
         void setGameLib(std::vector<std::string> gamelib);
         void setGraphicLib(std::vector<std::string> graphiclib);
