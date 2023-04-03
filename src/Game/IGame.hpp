@@ -12,6 +12,7 @@
 #include <vector>
 #include <string>
 #include <unordered_map>
+#include <array>
 
 #ifndef KEY_HPP_
     #define KEY_HPP_
@@ -35,8 +36,8 @@ class IGame {
         virtual std::vector<std::string> getMap() const = 0;
         virtual void runGame(std::size_t key) = 0;
         virtual bool getStatus() const = 0;
-        virtual std::size_t getScore() const = 0;
         virtual void restart() = 0;
+        virtual std::size_t getScore() const = 0;
         virtual std::unordered_map<char, std::array<u_int8_t, 4>> getRgbValues() const = 0;
 };
 
