@@ -87,6 +87,8 @@ void SDL::displayMap(std::vector<std::string> map, int score, std::unordered_map
         pos.y += 28;
     }
     SDL_RenderPresent(_renderer);
+    SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
+    SDL_RenderClear(_renderer);
 }
 
 int SDL::handleEvent()
