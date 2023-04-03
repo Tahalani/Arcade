@@ -38,7 +38,7 @@ void SDL::drawText(const std::string text, const Vector2i pos, const size_t size
     SDL_Surface *surface;
     SDL_Texture *texture;
     SDL_Rect rect;
-    TTF_Font *_font = TTF_OpenFont("ressources/font.ttf", size);
+    TTF_Font *_font = TTF_OpenFont("assets/font.ttf", size);
 
     surface = TTF_RenderText_Solid(_font, text.c_str(), color);
     texture = SDL_CreateTextureFromSurface(_renderer, surface);

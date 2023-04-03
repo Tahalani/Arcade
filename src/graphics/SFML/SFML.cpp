@@ -38,7 +38,7 @@ void SFML::displayMap(std::vector<std::string> map, int score, std::unordered_ma
     for (std::size_t i = 0; i < map.size(); i++) {
         for (std::size_t j = 0; j < map[i].size(); j++) {
             if (map[i][j] == 'O') {
-                if (drawSprite("ressources/mehdi.jpg", pos) == false) {
+                if (drawSprite("assets/mehdi.jpg", pos) == false) {
                     color = {rgb[map[i][j]][0], rgb[map[i][j]][1], rgb[map[i][j]][2], rgb[map[i][j]][3]};
                     drawRect(pos, size, color);
                 }
@@ -72,7 +72,7 @@ void SFML::drawText(const std::string text, const Vector2i pos, const size_t siz
 {
     sf::Font font;
     sf::Text textToDisplay;
-    if (!font.loadFromFile("ressources/font.ttf"))
+    if (!font.loadFromFile("assets/font.ttf"))
         return;
     textToDisplay.setFont(font);
     textToDisplay.setString(text);
