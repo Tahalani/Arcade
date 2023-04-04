@@ -13,6 +13,8 @@
     #include <chrono>
     #include <thread>
     #include <unordered_map>
+    #include <map>
+    #include <functional>
     #include <array>
     #include <sstream>
     #include <ctime>
@@ -39,6 +41,10 @@ class Pacman : public IGame {
         ~Pacman();
         std::vector<std::string> getMap() const override {return map;};
         std::size_t moveSnake(std::size_t direction, std::vector<std::string> &map);
+        std::size_t moveRight(std::vector<std::string> &map);
+        std::size_t moveLeft(std::vector<std::string> &map);
+        std::size_t moveUp(std::vector<std::string> &map);
+        std::size_t moveDown(std::vector<std::string> &map);
         std::size_t getScore() const override {return _score;};
         std::size_t getGoal() const {return _goal;};
         void setPos_tp(std::vector<std::string> map);

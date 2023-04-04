@@ -125,107 +125,226 @@ void Pacman::setStatus(bool status)
     _status = status;
 }
 
-std::size_t Pacman::moveSnake(std::size_t key, std::vector<std::string> &map)
+std::size_t Pacman::moveLeft(std::vector<std::string> &map)
 {
-    if (key == LEFT) {
-        for (std::size_t i = 0; i < _map_size_x; i++) {
-            for (std::size_t j = 0; j < _map_size_y; j++) {
-                if (map[i][j] == PACMAN && map[i][j - 1] != WALL) {
-                    if (map[i][j - 1] == GHOST && _is_boost == false)
-                        _is_loose = true;
-                    if (map[i][j - 1] == GHOST && _is_boost == true) {
-                        map[i][j - 1] = EMPTY;
-                        _is_boost = false;
-                    }
-                    if (map[i][j - 1] == COIN)
-                        _score++;
-                    if (map[i][j - 1] == 'A') {
-                        map[_pos_tp_B_x][_pos_tp_B_y - 1] = PACMAN;
-                        map[i][j] = EMPTY;
-                        return (1);
-                    }
-                    if (map[i][j - 1] == BOOST)
-                        setIsBoost(true);
-                    _map_history[i][j] = 'I';
-                    map[i][j - 1] = PACMAN;
+    for (std::size_t i = 0; i < _map_size_x; i++) {
+        for (std::size_t j = 0; j < _map_size_y; j++) {
+            if (map[i][j] == PACMAN && map[i][j - 1] != WALL) {
+                if (map[i][j - 1] == GHOST && _is_boost == false)
+                    _is_loose = true;
+                if (map[i][j - 1] == GHOST && _is_boost == true) {
+                    map[i][j - 1] = EMPTY;
+                    _is_boost = false;
+                }
+                if (map[i][j - 1] == COIN)
+                    _score++;
+                if (map[i][j - 1] == 'A') {
+                    map[_pos_tp_B_x][_pos_tp_B_y - 1] = PACMAN;
                     map[i][j] = EMPTY;
                     return (1);
                 }
-            }
-        }
-    }
-    if (key == RIGHT) {
-        for (std::size_t i = 0; i < _map_size_x; i++) {
-            for (std::size_t j = 0; j < _map_size_y; j++) {
-                if (map[i][j] == PACMAN && map[i][j + 1] != WALL) {
-                    if (map[i][j + 1] == GHOST && _is_boost == false)
-                        _is_loose = true;
-                    if (map[i][j - 1] == GHOST && _is_boost == true) {
-                        map[i][j + 1] = EMPTY;
-                        _is_boost = false;
-                    }
-                    if (map[i][j + 1] == COIN)
-                        _score++;
-                    if (map[i][j + 1] == 'B') {
-                        map[_pos_tp_A_x][_pos_tp_A_y + 1] = PACMAN;
-                        map[i][j] = EMPTY;
-                        return (1);
-                    }
-                    if (map[i][j + 1] == BOOST)
-                        setIsBoost(true);
-                    _map_history[i][j] = 'I';
-                    map[i][j + 1] = PACMAN;
-                    map[i][j] = EMPTY;
-                    return (1);
-                }
-            }
-        }
-    }
-    if (key == UP) {
-        for (std::size_t i = 0; i < _map_size_x; i++) {
-            for (std::size_t j = 0; j < _map_size_y; j++) {
-                if (map[i][j] == PACMAN && map[i - 1][j] != WALL) {
-                    if (map[i - 1][j] == GHOST && _is_boost == false)
-                        _is_loose = true;
-                    if (map[i - 1][j] == GHOST && _is_boost == true) {
-                        map[i - 1][j] = EMPTY;
-                        _is_boost = false;
-                    }
-                    if (map[i - 1][j] == COIN)
-                        _score++;
-                    if (map[i - 1][j] == BOOST)
-                        setIsBoost(true);
-                    _map_history[i][j] = 'I';
-                    map[i - 1][j] = PACMAN;
-                    map[i][j] = EMPTY;
-                    return (1);
-                }
-            }
-        }
-    }
-    if (key == DOWN) {
-        for (std::size_t i = 0; i < _map_size_x; i++) {
-            for (std::size_t j = 0; j < _map_size_y; j++) {
-                if (map[i][j] == PACMAN && map[i + 1][j] != WALL) {
-                    if (map[i + 1][j] == GHOST && _is_boost == false)
-                        _is_loose = true;
-                    if (map[i + 1][j] == GHOST && _is_boost == true) {
-                        map[i + 1][j] = EMPTY;
-                        _is_boost = false;
-                    }
-                    if (map[i + 1][j] == COIN)
-                        _score++;
-                    if (map[i + 1][j] == BOOST)
-                        setIsBoost(true);
-                    _map_history[i][j] = 'I';
-                    map[i + 1][j] = PACMAN;
-                    map[i][j] = EMPTY;
-                    return (1);
-                }
+                if (map[i][j - 1] == BOOST)
+                    setIsBoost(true);
+                _map_history[i][j] = 'I';
+                map[i][j - 1] = PACMAN;
+                map[i][j] = EMPTY;
+                return (1);
             }
         }
     }
     return (0);
+}
+
+std::size_t Pacman::moveRight(std::vector<std::string> &map)
+{
+    for (std::size_t i = 0; i < _map_size_x; i++) {
+        for (std::size_t j = 0; j < _map_size_y; j++) {
+            if (map[i][j] == PACMAN && map[i][j + 1] != WALL) {
+                if (map[i][j + 1] == GHOST && _is_boost == false)
+                    _is_loose = true;
+                if (map[i][j - 1] == GHOST && _is_boost == true) {
+                    map[i][j + 1] = EMPTY;
+                    _is_boost = false;
+                }
+                if (map[i][j + 1] == COIN)
+                    _score++;
+                if (map[i][j + 1] == 'B') {
+                    map[_pos_tp_A_x][_pos_tp_A_y + 1] = PACMAN;
+                    map[i][j] = EMPTY;
+                    return (1);
+                }
+                if (map[i][j + 1] == BOOST)
+                    setIsBoost(true);
+                _map_history[i][j] = 'I';
+                map[i][j + 1] = PACMAN;
+                map[i][j] = EMPTY;
+                return (1);
+            }
+        }
+    }
+    return (0);
+}
+
+std::size_t Pacman::moveUp(std::vector<std::string> &map)
+{
+    for (std::size_t i = 0; i < _map_size_x; i++) {
+        for (std::size_t j = 0; j < _map_size_y; j++) {
+            if (map[i][j] == PACMAN && map[i - 1][j] != WALL) {
+                if (map[i - 1][j] == GHOST && _is_boost == false)
+                    _is_loose = true;
+                if (map[i - 1][j] == GHOST && _is_boost == true) {
+                    map[i - 1][j] = EMPTY;
+                    _is_boost = false;
+                }
+                if (map[i - 1][j] == COIN)
+                    _score++;
+                if (map[i - 1][j] == BOOST)
+                    setIsBoost(true);
+                _map_history[i][j] = 'I';
+                map[i - 1][j] = PACMAN;
+                map[i][j] = EMPTY;
+                return (1);
+            }
+        }
+    }
+    return (0);
+}
+
+std::size_t Pacman::moveDown(std::vector<std::string> &map)
+{
+    for (std::size_t i = 0; i < _map_size_x; i++) {
+        for (std::size_t j = 0; j < _map_size_y; j++) {
+            if (map[i][j] == PACMAN && map[i + 1][j] != WALL) {
+                if (map[i + 1][j] == GHOST && _is_boost == false)
+                    _is_loose = true;
+                if (map[i + 1][j] == GHOST && _is_boost == true) {
+                    map[i + 1][j] = EMPTY;
+                    _is_boost = false;
+                }
+                if (map[i + 1][j] == COIN)
+                    _score++;
+                if (map[i + 1][j] == BOOST)
+                    setIsBoost(true);
+                _map_history[i][j] = 'I';
+                map[i + 1][j] = PACMAN;
+                map[i][j] = EMPTY;
+                return (1);
+            }
+        }
+    }
+    return (0);
+}
+
+std::size_t Pacman::moveSnake(std::size_t key, std::vector<std::string> &map)
+{
+    const std::map<std::size_t, std::function<size_t(std::vector<std::string> &)>> moves = {
+        {LEFT, std::bind(&Pacman::moveLeft, this, std::placeholders::_1)},
+        {RIGHT, std::bind(&Pacman::moveRight, this, std::placeholders::_1)},
+        {UP, std::bind(&Pacman::moveUp, this, std::placeholders::_1)},
+        {DOWN, std::bind(&Pacman::moveDown, this, std::placeholders::_1)}
+    };
+    return (moves.at(key)(map));
+
+
+    // if (key == LEFT) {
+    //     for (std::size_t i = 0; i < _map_size_x; i++) {
+    //         for (std::size_t j = 0; j < _map_size_y; j++) {
+    //             if (map[i][j] == PACMAN && map[i][j - 1] != WALL) {
+    //                 if (map[i][j - 1] == GHOST && _is_boost == false)
+    //                     _is_loose = true;
+    //                 if (map[i][j - 1] == GHOST && _is_boost == true) {
+    //                     map[i][j - 1] = EMPTY;
+    //                     _is_boost = false;
+    //                 }
+    //                 if (map[i][j - 1] == COIN)
+    //                     _score++;
+    //                 if (map[i][j - 1] == 'A') {
+    //                     map[_pos_tp_B_x][_pos_tp_B_y - 1] = PACMAN;
+    //                     map[i][j] = EMPTY;
+    //                     return (1);
+    //                 }
+    //                 if (map[i][j - 1] == BOOST)
+    //                     setIsBoost(true);
+    //                 _map_history[i][j] = 'I';
+    //                 map[i][j - 1] = PACMAN;
+    //                 map[i][j] = EMPTY;
+    //                 return (1);
+    //             }
+    //         }
+    //     }
+    // }
+    // if (key == RIGHT) {
+    //     for (std::size_t i = 0; i < _map_size_x; i++) {
+    //         for (std::size_t j = 0; j < _map_size_y; j++) {
+    //             if (map[i][j] == PACMAN && map[i][j + 1] != WALL) {
+    //                 if (map[i][j + 1] == GHOST && _is_boost == false)
+    //                     _is_loose = true;
+    //                 if (map[i][j - 1] == GHOST && _is_boost == true) {
+    //                     map[i][j + 1] = EMPTY;
+    //                     _is_boost = false;
+    //                 }
+    //                 if (map[i][j + 1] == COIN)
+    //                     _score++;
+    //                 if (map[i][j + 1] == 'B') {
+    //                     map[_pos_tp_A_x][_pos_tp_A_y + 1] = PACMAN;
+    //                     map[i][j] = EMPTY;
+    //                     return (1);
+    //                 }
+    //                 if (map[i][j + 1] == BOOST)
+    //                     setIsBoost(true);
+    //                 _map_history[i][j] = 'I';
+    //                 map[i][j + 1] = PACMAN;
+    //                 map[i][j] = EMPTY;
+    //                 return (1);
+    //             }
+    //         }
+    //     }
+    // }
+    // if (key == UP) {
+    //     for (std::size_t i = 0; i < _map_size_x; i++) {
+    //         for (std::size_t j = 0; j < _map_size_y; j++) {
+    //             if (map[i][j] == PACMAN && map[i - 1][j] != WALL) {
+    //                 if (map[i - 1][j] == GHOST && _is_boost == false)
+    //                     _is_loose = true;
+    //                 if (map[i - 1][j] == GHOST && _is_boost == true) {
+    //                     map[i - 1][j] = EMPTY;
+    //                     _is_boost = false;
+    //                 }
+    //                 if (map[i - 1][j] == COIN)
+    //                     _score++;
+    //                 if (map[i - 1][j] == BOOST)
+    //                     setIsBoost(true);
+    //                 _map_history[i][j] = 'I';
+    //                 map[i - 1][j] = PACMAN;
+    //                 map[i][j] = EMPTY;
+    //                 return (1);
+    //             }
+    //         }
+    //     }
+    // }
+    // if (key == DOWN) {
+    //     for (std::size_t i = 0; i < _map_size_x; i++) {
+    //         for (std::size_t j = 0; j < _map_size_y; j++) {
+    //             if (map[i][j] == PACMAN && map[i + 1][j] != WALL) {
+    //                 if (map[i + 1][j] == GHOST && _is_boost == false)
+    //                     _is_loose = true;
+    //                 if (map[i + 1][j] == GHOST && _is_boost == true) {
+    //                     map[i + 1][j] = EMPTY;
+    //                     _is_boost = false;
+    //                 }
+    //                 if (map[i + 1][j] == COIN)
+    //                     _score++;
+    //                 if (map[i + 1][j] == BOOST)
+    //                     setIsBoost(true);
+    //                 _map_history[i][j] = 'I';
+    //                 map[i + 1][j] = PACMAN;
+    //                 map[i][j] = EMPTY;
+    //                 return (1);
+    //             }
+    //         }
+    //     }
+    // }
+    // return (0);
 }
 
 void Pacman::setPos_tp(std::vector<std::string> map)

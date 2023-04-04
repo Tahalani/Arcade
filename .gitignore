@@ -2,3 +2,4 @@ boostrap/
 .vscode/
 *.o
 *.so
+output
