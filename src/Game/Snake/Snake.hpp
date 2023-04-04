@@ -52,6 +52,7 @@ class Snake : public IGame {
     private:
         std::size_t _key;
         std::map<std::size_t, std::pair<std::size_t, std::size_t>>  _coord;
+        double _speed;
         bool _is_loose;
         bool _is_apple;
         double _sink;

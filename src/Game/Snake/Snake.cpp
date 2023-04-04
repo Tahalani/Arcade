@@ -11,6 +11,7 @@ Snake::Snake()
 {
     _status = true;
     _time = 0;
+    _speed = 0.2;
     _score = 0;
     _is_apple = false;
     _key = 0;
@@ -26,12 +27,13 @@ Snake::~Snake()
 }
 
 void Snake::runGame(std::size_t key)
-{
+{   
+    double increase = (_score / 5) * 0.025;
     setTime();
     double time = getTime();
     if (key == QUIT || key == LEFT || key == RIGHT || key == UP || key == DOWN)
         _key = key;
-    if (time > 0.2) {
+    if (time > _speed - increase) {
         in_loop(_key);
         if (_is_loose == true)
             restart();
