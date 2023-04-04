@@ -11,6 +11,7 @@
     #include "../ILib.hpp"
     #include <SFML/Graphics.hpp>
     #include <SFML/Window.hpp>
+    #include <SFML/Audio.hpp>
 
 #define WIDTH 1920
 #define HEIGHT 1080
@@ -28,6 +29,7 @@ class SFML : public ILib{
         void menu() override;
     private:
         sf::RenderWindow _window;
+        sf::Music _music;
         int _lastKey;
 };
 

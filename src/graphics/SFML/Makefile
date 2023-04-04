@@ -9,7 +9,7 @@ NAME		=	arcade_sfml.so
 
 SRC 		=	SFML.cpp	\
 
-LDFLAGS 	= -lsfml-graphics -lsfml-window -lsfml-system
+LDFLAGS 	= -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 
 CXXFLAGS 	= -Wall -Wextra -fPIC
 

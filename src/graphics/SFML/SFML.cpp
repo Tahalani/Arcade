@@ -11,10 +11,14 @@ SFML::SFML()
 {
     _window.create(sf::VideoMode(WIDTH, HEIGHT, 32), GAME_NAME, sf::Style::Default);
     _lastKey = 404;
+    if (_music.openFromFile("assets/music.ogg"))
+        _music.play();
 }
 
 SFML::~SFML()
 {
+    if (_music.getStatus() == sf::SoundSource::Status::Playing)
+        _music.stop();
     _window.close();
 }
 
