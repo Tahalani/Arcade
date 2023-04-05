@@ -23,7 +23,7 @@ comment intégrer votre jeu ou librairie graphique.
 
 Le core dans l'arcade est le coeur du programme. Il est chargé de gérer les
 librairies graphiques et les jeux. Il fait appel aux librairies graphiques et
-aux jeux pour afficher les jeux. 
+aux jeux pour afficher les jeux.
 Elle fait appel aussi un classe `Error` qui gère les erreurs.
 
 Le core est la classe `Arcade` qui se trouve dans un fichier `Arcade.hpp`.

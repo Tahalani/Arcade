@@ -8,7 +8,7 @@ Projet de deuxième année Epitech. Le but est de créer un jeu de type arcade e
 
 ### Compilation
 
-    Pour compiler seuelement les librairies graphiques, il faut utiliser la commande `make graphicals` ou `make` dans le dossier graphics/.
+    Pour compiler seulement les librairies graphiques, il faut utiliser la commande `make graphicals` ou `make` dans le dossier graphics/.
 
     Pour compiler seuelement les jeux, il faut utiliser la commande `make games` ou `make` dans le dossier Game/.
 
