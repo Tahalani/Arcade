@@ -32,7 +32,7 @@ class Arcade {
         GAME, // change de jeux
         VALID
     };
-        Arcade(std::string libname);
+        Arcade(const std::string &libname);
         ~Arcade();
         std::string getLibName();
         void getGameLib();
@@ -40,8 +40,6 @@ class Arcade {
         void addplayername(char c);
         void setGameLib(std::vector<std::string> gamelib);
         void setGraphicLib(std::vector<std::string> graphiclib);
-        // void LoadLib(std::string &libname);
-        // void LoadGame(std::string &libname);
         void LoadnextLib();
         void LoadprevLib();
         void LoadnextGame();
@@ -53,10 +51,8 @@ class Arcade {
         std::string _libname;
         std::vector<std::string> _gamelib;
         std::vector<std::string> _graphiclib;
-        // ILib *_lib;
         Loader<ILib> _lib;
         Loader<IGame> _game;
-        // std::shared_ptr<IGame> _gameptr;
         std::vector<void *> _handles;
         std::string _playername;
 };

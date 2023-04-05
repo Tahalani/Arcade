@@ -8,7 +8,7 @@
 #include "arcade.hpp"
 #include <algorithm>
 
-Arcade::Arcade(std::string libname) : _libname(libname)
+Arcade::Arcade(const std::string &libname) : _libname(libname)
 {
     this->getGameLib();
     this->getGraphicLib();
@@ -65,7 +65,6 @@ void Arcade::menu()
         }
         addplayername(key2);
     }
-    // delete _lib;
     try {
         _lib.LoadLib(_graphiclib.front(), "Lib");
         _game.LoadLib(_gamelib.front(), "Game");
@@ -116,8 +115,6 @@ void Arcade::loop()
             _game.getLib()->restart();
         }
     }
-    // delete _lib;
-    // delete _game;
 }
 
 std::string Arcade::getLibName()
@@ -188,7 +185,6 @@ void Arcade::getGraphicLib()
 
 void Arcade::LoadnextLib()
 {
-    // delete _lib;
     _graphiclib.emplace_back(_graphiclib.front());
     _graphiclib.erase(_graphiclib.begin());
     std ::cout << "newlib: " << _graphiclib.front() << std::endl;
@@ -201,7 +197,6 @@ void Arcade::LoadnextLib()
 
 void Arcade::LoadnextGame()
 {
-    // delete _game;
     _gamelib.emplace_back(_gamelib.front());
     _gamelib.erase(_gamelib.begin());
     std ::cout << "newgame: " << _gamelib.front() << std::endl;
@@ -214,7 +209,6 @@ void Arcade::LoadnextGame()
 
 void Arcade::LoadprevLib()
 {
-    // delete _lib;
     _graphiclib.insert(_graphiclib.begin(), _graphiclib.back());
     _graphiclib.pop_back();
     std ::cout << "newlib: " << _graphiclib.front() << std::endl;
@@ -227,7 +221,6 @@ void Arcade::LoadprevLib()
 
 void Arcade::LoadprevGame()
 {
-    // delete _game;
     _gamelib.insert(_gamelib.begin(), _gamelib.back());
     _gamelib.pop_back();
     std ::cout << "newgame: " << _gamelib.front() << std::endl;

@@ -32,7 +32,7 @@ class Loader {
             for (auto &handle : _handles)
                 dlclose(handle);
         }
-        void LoadLib(std::string &libname, std::string const &point) {
+        void LoadLib(std::string const &libname, std::string const &point) {
             if (_lib)
                 delete _lib;
             T* (*entryLib)();
